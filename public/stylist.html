@@ -17,6 +17,9 @@
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes typing { 0%, 60% { opacity: 0.3; } 30% { opacity: 1; } }
+    .yves-response p { margin-bottom: 0.75rem; }
+    .yves-response p:last-child { margin-bottom: 0; }
+    .yves-response strong { color: #e2e8f0; font-weight: 600; }
     .typing-dot { animation: typing 1.4s infinite; }
     .typing-dot:nth-child(2) { animation-delay: 0.2s; }
     .typing-dot:nth-child(3) { animation-delay: 0.4s; }
@@ -57,8 +60,8 @@
       <!-- New Session Setup (shown when no conversation) -->
       <div id="setupPanel" class="flex-1 flex items-center justify-center p-6">
         <div class="max-w-md w-full text-center">
-          <div class="text-5xl mb-4">✨</div>
-          <h2 class="text-2xl font-bold text-white mb-2">Votre Styliste IA</h2>
+          <div class="mb-4"><img src="/yves-avatar.png" alt="Yves" class="w-20 h-20 rounded-2xl mx-auto object-cover border-2 border-brand-500/30"></div>
+          <h2 class="text-2xl font-bold text-white mb-2">Yves, votre Styliste IA</h2>
           <p class="text-slate-400 text-sm mb-6">Décrivez l'occasion et fixez votre budget. Le styliste combinera votre garde-robe avec les créations des designers M3.</p>
           <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-left space-y-4">
             <div>
@@ -171,11 +174,11 @@
       if (role === 'user') {
         return `<div class="flex justify-end fade-in"><div class="bg-brand-500/20 border border-brand-500/20 rounded-2xl rounded-tr-sm px-4 py-3 max-w-lg"><p class="text-white text-sm whitespace-pre-wrap">${escapeHTML(content)}</p></div></div>`;
       }
-      return `<div class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3 max-w-2xl"><p class="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHTML(content)}</p></div></div>`;
+      return `<div class="flex gap-3 fade-in"><div class="w-8 h-8 rounded-lg flex-shrink-0 overflow-hidden"><img src="/yves-avatar.png" alt="Yves" class="w-full h-full object-cover"></div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3 max-w-2xl"><div class="text-slate-300 text-sm leading-relaxed yves-response">${formatResponse(content)}</div></div></div>`;
     }
 
     function typingHTML() {
-      return `<div id="typingIndicator" class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3"><div class="flex gap-1"><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span></div></div></div>`;
+      return `<div id="typingIndicator" class="flex gap-3 fade-in"><div class="w-8 h-8 rounded-lg flex-shrink-0 overflow-hidden"><img src="/yves-avatar.png" alt="Yves" class="w-full h-full object-cover"></div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3"><div class="flex gap-1"><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span></div></div></div>`;
     }
 
     async function startSession() {
@@ -247,6 +250,27 @@
 
     function newConversation() { showSetup(); loadConversations(); }
     function escapeHTML(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+    function formatResponse(raw) {
+      var text = escapeHTML(raw);
+      // Strip markdown headers
+      text = text.replace(/^#{1,4}\s+/gm, '');
+      // Convert **bold** to <strong>
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+      // Remove remaining single asterisks
+      text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      // Convert markdown-style lists (- item) to clean lines
+      text = text.replace(/^[\-•]\s+/gm, '→ ');
+      // Split into paragraphs on double newlines
+      var paragraphs = text.split(/\n{2,}/);
+      return paragraphs.map(function(p) {
+        p = p.trim();
+        if (!p) return '';
+        // If paragraph contains line breaks, preserve them
+        p = p.replace(/\n/g, '<br>');
+        return '<p class="mb-3 last:mb-0">' + p + '</p>';
+      }).filter(Boolean).join('');
+    }
     function logout() { localStorage.removeItem('auth_token'); window.location.href = '/'; }
 
     loadConversations();
