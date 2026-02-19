@@ -1,6 +1,4 @@
-// api/auth/me.js (adapted to use db.js like BizSimHub)
-import { getSQL } from '../../lib/db.js';
-const sql = getSQL();
+// api/auth/me.js - M3 Style
 import { requireAuth, cors } from '../../lib/auth.js';
 import { UserDB } from '../../lib/db.js';
 
@@ -16,21 +14,16 @@ export default async function handler(req, res) {
     const user = await UserDB.findById(decoded.userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const assessments = await sql`
-      SELECT COUNT(*) as count FROM assessment_results WHERE user_id = ${user.id}
-    `;
-
     return res.status(200).json({
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
-        organization: user.organization,
-        jobTitle: user.job_title,
+        plan: user.plan || 'free',
         isAdmin: user.is_admin,
+        isDesigner: user.is_designer,
         authProvider: user.auth_provider,
-        createdAt: user.created_at,
-        assessmentCount: parseInt(assessments.rows[0].count)
+        createdAt: user.created_at
       }
     });
   } catch (error) {
