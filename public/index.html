@@ -68,7 +68,7 @@
       <p class="text-lg text-slate-400 leading-relaxed mb-10 max-w-xl">
         M3 Style combine ce que vous possédez déjà avec les créations des meilleurs designers montréalais. Un styliste personnel IA qui connaît votre corps, votre budget et vos objectifs.
       </p>
-      <button onclick="showAuth('register')" class="btn-cta text-white px-8 py-4 rounded-full font-bold text-base transition-all">
+      <button onclick="currentUser ? window.location.href='/stylist.html' : showAuth('register')" class="btn-cta text-white px-8 py-4 rounded-full font-bold text-base transition-all">
         Démarrer une session styliste gratuite
       </button>
     </div>
@@ -302,5 +302,6 @@
     document.getElementById('authModal').addEventListener('click', function(e) { if (e.target === this) hideAuth(); });
     document.querySelectorAll('a[href^="#"]').forEach(function(a) { a.addEventListener('click', function(e) { var t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } }); });
   </script>
+<script src="/yves-helper.js"></script>
 </body>
 </html>

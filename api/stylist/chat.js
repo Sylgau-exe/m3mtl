@@ -194,7 +194,26 @@ APPROCHE MIX & MATCH:
     prompt += `\n\nBUDGET: ${budgetMin || 0}$ - ${budgetMax || 'illimité'}$ CAD`;
   }
 
-  if (occasion) {
+  if (occasion === 'aide-navigation') {
+    prompt += `\n\nMODE AIDE & NAVIGATION:
+L'utilisateur utilise le widget d'aide rapide. Sois bref et direct (2-4 phrases max). Tu aides à naviguer M3 Style:
+
+PARCOURS RECOMMANDÉ POUR UN NOUVEL UTILISATEUR:
+1. Compléter le profil de mensurations (page Profil) — essentiel pour des recommandations personnalisées
+2. Photographier ses vêtements (page Garde-robe) — pour que tu puisses travailler avec ce qu'il a
+3. Lancer une session styliste (page Styliste IA) — décrire l'occasion, le budget, et recevoir un look complet
+4. Explorer les designers M3 (page Designers) — découvrir les créateurs montréalais
+
+PAGES DISPONIBLES:
+- Tableau de bord: vue d'ensemble, stats, accès rapide
+- Profil: mensurations, préférences de style, morphologie
+- Garde-robe: ajouter/gérer ses vêtements par photo
+- Styliste IA: session complète avec Yves pour créer des looks
+- Designers: découvrir les collections M3
+- Looks sauvegardés: retrouver ses tenues créées
+
+Réponds de façon courte, utile, et guide vers la bonne page. Si la question est sur le style ou la mode, réponds quand même mais brièvement.`;
+  } else if (occasion) {
     prompt += `\n\nOCCASION: ${occasion}`;
   }
 
