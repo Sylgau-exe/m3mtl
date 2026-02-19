@@ -80,8 +80,36 @@ export default async function handler(req, res) {
         ORDER BY created_at ASC LIMIT 20
       `;
 
+      // Load designer product catalog matching context
+      let catalogProducts = [];
+      try {
+        const neon = (await import('@neondatabase/serverless')).neon;
+        const rawSql = neon(process.env.POSTGRES_URL);
+        
+        let productQuery = `
+          SELECT p.id, p.name_fr, p.category, p.subcategory, p.price, p.color_primary, 
+                 p.material, p.fit, p.pattern, p.available_sizes, p.occasion, p.style_tags,
+                 p.images, d.brand_name
+          FROM products p
+          JOIN designers d ON p.designer_id = d.id
+          WHERE p.status = 'active' AND p.in_stock = true AND d.status = 'active'
+        `;
+        const params = [];
+        let idx = 0;
+        
+        if (budget_max && budget_max > 0) {
+          idx++; productQuery += ` AND p.price <= $${idx}`; params.push(parseFloat(budget_max));
+        }
+        if (occasion && occasion !== 'aide-navigation') {
+          idx++; productQuery += ` AND ($${idx} = ANY(p.occasion) OR 'quotidien' = ANY(p.occasion))`; params.push(occasion);
+        }
+        productQuery += ` ORDER BY p.featured DESC, p.price ASC LIMIT 20`;
+        
+        catalogProducts = await rawSql(productQuery, params);
+      } catch(e) { console.log('Catalog load skipped:', e.message); }
+
       // Build system prompt
-      const systemPrompt = buildStylistPrompt(profile, wardrobeItems, occasion, budget_min, budget_max);
+      const systemPrompt = buildStylistPrompt(profile, wardrobeItems, occasion, budget_min, budget_max, catalogProducts);
 
       // Call Claude API
       const apiMessages = history.rows.map(m => ({
@@ -127,6 +155,17 @@ export default async function handler(req, res) {
       // Update conversation timestamp
       await sql`UPDATE stylist_conversations SET updated_at = CURRENT_TIMESTAMP WHERE id = ${convId}`;
 
+      // Track product recommendations — increment ai_recommend_count
+      try {
+        const productRefs = assistantMessage.match(/\[M3:(\d+)\]/g);
+        if (productRefs) {
+          const ids = productRefs.map(ref => parseInt(ref.match(/\d+/)[0]));
+          for (const pid of ids) {
+            await sql`UPDATE products SET ai_recommend_count = ai_recommend_count + 1 WHERE id = ${pid}`;
+          }
+        }
+      } catch(e) { console.log('Recommend tracking skipped:', e.message); }
+
       return res.status(200).json({ conversation_id: convId, response: assistantMessage });
     } catch (error) {
       console.error('Stylist chat error:', error);
@@ -137,7 +176,7 @@ export default async function handler(req, res) {
   return res.status(405).json({ error: 'Method not allowed' });
 }
 
-function buildStylistPrompt(profile, wardrobeItems, occasion, budgetMin, budgetMax) {
+function buildStylistPrompt(profile, wardrobeItems, occasion, budgetMin, budgetMax, catalogProducts) {
   let prompt = `Tu es Yves Ulysse, le styliste personnel IA de M3 Style. Né en Haïti, tu es arrivé au Canada en 1979 et tu t'es installé à Montréal, qui est devenue un terreau fertile pour ta créativité. Tu es le fondateur de Maison M3 et de l'événement annuel M3 / Mode Masculine Montréal. Tu es une figure incontournable de la scène mode et événementielle montréalaise.
 
 Ta personnalité est chaleureuse, confiante, avec un brin d'humour. Tu tutoies naturellement tes clients. Tu parles en français québécois professionnel — jamais guindé, toujours authentique et bienveillant. Tu adores aider les hommes à se sentir bien dans leur peau.
@@ -192,6 +231,19 @@ APPROCHE MIX & MATCH:
 
   if (budgetMin || budgetMax) {
     prompt += `\n\nBUDGET: ${budgetMin || 0}$ - ${budgetMax || 'illimité'}$ CAD`;
+  }
+
+  // Inject product catalog
+  if (catalogProducts && catalogProducts.length > 0) {
+    prompt += `\n\nCATALOGUE M3 STYLE — PRODUITS DESIGNERS DISPONIBLES (${catalogProducts.length} articles):`;
+    prompt += `\nIMPORTANT: Quand tu recommandes un produit du catalogue, mentionne TOUJOURS le nom exact, le designer, et le prix. Utilise le format [M3:ID] a la fin pour le lier (ex: "la Chemise Oxford Classique de Maison Elysee a 125$ [M3:47]").`;
+    prompt += `\nPrivilegie les produits du catalogue M3 pour completer les looks — ce sont des designers montrealais de qualite.\n`;
+    catalogProducts.forEach((p, i) => {
+      const sizes = p.available_sizes ? p.available_sizes.join(', ') : 'N/A';
+      prompt += `\n${i + 1}. ${p.name_fr} — ${p.brand_name} — ${p.price}$ — ${p.category}/${p.subcategory || ''} — Couleur: ${p.color_primary || 'N/A'} — Matiere: ${p.material || 'N/A'} — Tailles: ${sizes} [M3:${p.id}]`;
+    });
+  } else {
+    prompt += `\n\nCATALOGUE M3: Aucun produit ne correspond aux criteres actuels. Fais des recommandations generales de type de vetement.`;
   }
 
   if (occasion === 'aide-navigation') {

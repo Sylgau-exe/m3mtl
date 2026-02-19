@@ -8,130 +8,63 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwindcss.config = {
-      theme: { extend: { colors: { brand: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' } } } }
+      theme: {
+        extend: {
+          colors: { brand: { 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' } },
+          fontFamily: { heading: ['Space Grotesk', 'sans-serif'], body: ['DM Sans', 'sans-serif'] },
+        }
+      }
     }
   </script>
   <style>
     html { font-size: 18px; }
-    @media (max-width: 768px) { html { font-size: 16px; } }body{font-family:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif}h1,h2,h3,.font-display{font-family:"Space Grotesk",sans-serif}</style>
+    @media (max-width: 768px) { html { font-size: 16px; } }
+    body { font-family: 'DM Sans', sans-serif; background: #05050a; }
+    h1,h2,h3 { font-family: 'Space Grotesk', sans-serif; }
+    .product-card { transition: all 0.3s; }
+    .product-card:hover { transform: translateY(-4px); border-color: rgba(139,92,246,0.3); }
+  </style>
 </head>
-<body class="bg-[#05050a] min-h-screen">
+<body class="bg-[#05050a] text-white min-h-screen">
 
-  <!-- Header -->
-  <header class="border-b border-white/5 bg-[#05050a]/95 sticky top-0 z-50 backdrop-blur-sm">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center"><span class="text-xl">👔</span></div>
-        <span class="text-xl font-bold text-white">M3 <span class="text-brand-400">STYLE</span></span>
-      </a>
-      <div class="flex items-center gap-4">
-        <a href="/dashboard.html" class="text-slate-400 hover:text-white text-sm">Tableau de bord</a>
-        <a href="/wardrobe.html" class="text-slate-400 hover:text-white text-sm">Garde-robe</a>
-        <a href="/stylist.html" class="text-slate-400 hover:text-white text-sm">Styliste IA</a>
-        <a href="/profile.html" class="text-slate-400 hover:text-white text-sm">Mon profil</a>
-        <button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>
+  <!-- Nav -->
+  <nav class="border-b border-white/5 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="/dashboard.html" class="flex items-center gap-2 text-white font-bold text-xl">👔 <span class="font-heading">M3 STYLE</span></a>
+      <div class="flex items-center gap-6 text-slate-300">
+        <a href="/dashboard.html" class="hover:text-white">Tableau de bord</a>
+        <a href="/stylist.html" class="hover:text-white">Styliste IA</a>
+        <a href="/wardrobe.html" class="hover:text-white">Garde-robe</a>
+        <a href="/marketplace.html" class="text-brand-400 font-semibold">Designers</a>
+        <a href="#" onclick="logout()" class="hover:text-white">Déconnexion</a>
       </div>
     </div>
-  </header>
+  </nav>
 
-  <div class="max-w-7xl mx-auto px-6 py-8">
-
+  <div class="max-w-7xl mx-auto px-6 py-10">
     <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-white">Designers M3</h1>
-      <p class="text-slate-400 mt-1">Découvrez les collections des meilleurs designers montréalais</p>
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold mb-2">Designers Montréalais</h1>
+      <p class="text-slate-400 text-lg">Des créateurs d'ici, sélectionnés par Yves pour leur qualité et leur style unique.</p>
     </div>
 
-    <!-- Search & Filters -->
-    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
-      <input type="text" id="searchInput" placeholder="Rechercher un designer ou un produit..." class="flex-1 w-full sm:w-auto px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none" oninput="filterDesigners()">
-      <div class="flex gap-2 flex-wrap">
-        <select id="priceFilter" onchange="filterDesigners()" class="px-3 py-2.5 bg-[#05050a] border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:ring-brand-500">
-          <option value="">Tous les prix</option>
-          <option value="$">$ (Accessible)</option>
-          <option value="$$">$$ (Moyen)</option>
-          <option value="$$$">$$$ (Premium)</option>
-        </select>
-        <select id="styleFilter" onchange="filterDesigners()" class="px-3 py-2.5 bg-[#05050a] border border-white/10 rounded-lg text-white text-sm focus:ring-2 focus:ring-brand-500">
-          <option value="">Tous les styles</option>
-          <option value="classique">Classique</option>
-          <option value="moderne">Moderne</option>
-          <option value="streetwear">Streetwear</option>
-          <option value="casual">Casual</option>
-        </select>
-      </div>
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-3 mb-8">
+      <button class="filter-btn active px-5 py-2.5 rounded-full font-medium transition-colors bg-brand-500 text-white border border-brand-500" onclick="filterProducts('')" data-cat="">Tous</button>
+      <button class="filter-btn px-5 py-2.5 rounded-full font-medium transition-colors border border-white/10 text-slate-300 hover:border-brand-500/30" onclick="filterProducts('tops')" data-cat="tops">Hauts</button>
+      <button class="filter-btn px-5 py-2.5 rounded-full font-medium transition-colors border border-white/10 text-slate-300 hover:border-brand-500/30" onclick="filterProducts('bottoms')" data-cat="bottoms">Bas</button>
+      <button class="filter-btn px-5 py-2.5 rounded-full font-medium transition-colors border border-white/10 text-slate-300 hover:border-brand-500/30" onclick="filterProducts('suits')" data-cat="suits">Costumes</button>
+      <button class="filter-btn px-5 py-2.5 rounded-full font-medium transition-colors border border-white/10 text-slate-300 hover:border-brand-500/30" onclick="filterProducts('outerwear')" data-cat="outerwear">Manteaux</button>
+      <button class="filter-btn px-5 py-2.5 rounded-full font-medium transition-colors border border-white/10 text-slate-300 hover:border-brand-500/30" onclick="filterProducts('shoes')" data-cat="shoes">Chaussures</button>
+      <button class="filter-btn px-5 py-2.5 rounded-full font-medium transition-colors border border-white/10 text-slate-300 hover:border-brand-500/30" onclick="filterProducts('accessories')" data-cat="accessories">Accessoires</button>
     </div>
 
-    <!-- Coming Soon / Placeholder Designers -->
-    <div id="designerGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      
-      <!-- Placeholder cards showing what it will look like -->
-      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl overflow-hidden hover:border-brand-500/30 transition-all group">
-        <div class="h-48 bg-gradient-to-br from-[#0d0d14] to-[#141420] flex items-center justify-center">
-          <span class="text-6xl opacity-20">✂️</span>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 bg-brand-500/10 rounded-lg flex items-center justify-center text-lg">✂️</div>
-            <div>
-              <h3 class="font-bold text-white">Bientôt disponible</h3>
-              <p class="text-slate-400 text-xs">Montréal, QC</p>
-            </div>
-          </div>
-          <p class="text-slate-400 text-sm mb-3">Les designers M3 seront bientôt sur la plateforme avec leurs collections exclusives.</p>
-          <div class="flex gap-2 flex-wrap">
-            <span class="px-2 py-1 bg-brand-500/10 text-brand-400 rounded text-xs">Mode masculine</span>
-            <span class="px-2 py-1 bg-brand-500/10 text-brand-400 rounded text-xs">Montréal</span>
-          </div>
-        </div>
-      </div>
+    <!-- Product count -->
+    <p class="text-slate-400 mb-6"><span id="productCount">0</span> produits disponibles</p>
 
-      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl overflow-hidden hover:border-brand-500/30 transition-all group">
-        <div class="h-48 bg-gradient-to-br from-[#0d0d14] to-[#141420] flex items-center justify-center">
-          <span class="text-6xl opacity-20">🎨</span>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 bg-violet-500/10 rounded-lg flex items-center justify-center text-lg">🎨</div>
-            <div>
-              <h3 class="font-bold text-white">Appel aux designers</h3>
-              <p class="text-slate-400 text-xs">Rejoignez M3 Style</p>
-            </div>
-          </div>
-          <p class="text-slate-400 text-sm mb-3">Vous êtes designer? Inscrivez votre collection et rejoignez des acheteurs pré-qualifiés par notre IA.</p>
-          <div class="flex gap-2 flex-wrap">
-            <span class="px-2 py-1 bg-violet-500/10 text-violet-400 rounded text-xs">99$/saison</span>
-            <span class="px-2 py-1 bg-violet-500/10 text-violet-400 rounded text-xs">Analytics inclus</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-[#0d0d14] border border-brand-500/20 rounded-2xl overflow-hidden hover:border-brand-500/40 transition-all group">
-        <div class="h-48 bg-gradient-to-br from-brand-500/10 to-[#141420] flex items-center justify-center">
-          <span class="text-6xl opacity-30">🛍️</span>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 bg-brand-500/20 rounded-lg flex items-center justify-center text-lg">🛍️</div>
-            <div>
-              <h3 class="font-bold text-brand-400">Événement M3 — Automne 2026</h3>
-              <p class="text-slate-400 text-xs">Montréal</p>
-            </div>
-          </div>
-          <p class="text-slate-400 text-sm mb-3">Les collections présentées au prochain événement M3 seront disponibles ici en exclusivité.</p>
-          <div class="flex gap-2 flex-wrap">
-            <span class="px-2 py-1 bg-brand-500/10 text-brand-400 rounded text-xs">Accès exclusif</span>
-            <span class="px-2 py-1 bg-brand-500/10 text-brand-400 rounded text-xs">Automne 2026</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Info section -->
-    <div class="mt-12 bg-gradient-to-r from-brand-500/10 to-transparent border border-brand-500/20 rounded-2xl p-8 text-center">
-      <h2 class="text-xl font-bold text-white mb-2">Vous êtes designer?</h2>
-      <p class="text-slate-400 text-sm mb-4 max-w-lg mx-auto">Rejoignez M3 Style et accédez à des acheteurs pré-qualifiés par l'IA. Vitrine numérique, tableau de bord analytique, et visibilité à l'année pour seulement 99$/saison.</p>
-      <a href="mailto:sgauthier@executiveproducer.ca" class="inline-block bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors">Nous contacter →</a>
+    <!-- Products Grid -->
+    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div class="col-span-full text-center py-16 text-slate-400">Chargement des produits...</div>
     </div>
   </div>
 
@@ -139,8 +72,72 @@
     const token = localStorage.getItem('auth_token');
     if (!token) window.location.href = '/';
 
-    function filterDesigners() { /* Will filter when real designers are loaded */ }
+    let allProducts = [];
+    let currentCategory = '';
+
+    async function loadProducts() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const productId = params.get('product');
+        
+        const res = await fetch('/api/products', { headers: { 'Authorization': 'Bearer ' + token } });
+        const data = await res.json();
+        allProducts = data.products || [];
+        renderProducts();
+
+        // If deep-linked to a product, scroll to it
+        if (productId) {
+          setTimeout(function() {
+            var el = document.getElementById('product-' + productId);
+            if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.style.boxShadow = '0 0 30px rgba(139,92,246,0.4)'; }
+          }, 500);
+        }
+      } catch(e) { console.error('Failed to load products:', e); }
+    }
+
+    function filterProducts(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(function(btn) {
+        var isActive = btn.dataset.cat === cat;
+        btn.className = 'filter-btn px-5 py-2.5 rounded-full font-medium transition-colors ' +
+          (isActive ? 'bg-brand-500 text-white border border-brand-500' : 'border border-white/10 text-slate-300 hover:border-brand-500/30');
+      });
+      renderProducts();
+    }
+
+    function renderProducts() {
+      var filtered = currentCategory ? allProducts.filter(function(p) { return p.category === currentCategory; }) : allProducts;
+      document.getElementById('productCount').textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        document.getElementById('productsGrid').innerHTML = '<div class="col-span-full text-center py-16"><div class="text-4xl mb-4">👔</div><p class="text-slate-400">Aucun produit dans cette catégorie pour le moment.</p></div>';
+        return;
+      }
+
+      document.getElementById('productsGrid').innerHTML = filtered.map(function(p) {
+        var img = p.images && p.images[0] ? p.images[0] : 'https://placehold.co/600x800/0d0d14/8b5cf6?text=' + encodeURIComponent(p.name_fr || p.name);
+        var saleHtml = p.sale_price ? '<span class="line-through text-slate-400 text-sm mr-2">' + p.price + '$</span><span class="text-emerald-400 font-bold">' + p.sale_price + '$</span>' : '<span class="text-white font-bold">' + p.price + '$</span>';
+        var tags = (p.style_tags || []).slice(0, 2).map(function(t) { return '<span class="px-2 py-0.5 bg-white/5 rounded text-xs text-slate-400">' + t + '</span>'; }).join(' ');
+        
+        return '<div id="product-' + p.id + '" class="product-card bg-[#0d0d14] border border-white/5 rounded-2xl overflow-hidden">' +
+          '<div class="aspect-[3/4] bg-[#0a0a12] flex items-center justify-center overflow-hidden">' +
+            '<img src="' + img + '" alt="' + (p.name_fr || p.name) + '" class="w-full h-full object-cover" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=text-6xl>👔</div>\'">' +
+          '</div>' +
+          '<div class="p-4">' +
+            '<p class="text-brand-400 text-xs font-medium mb-1">' + (p.designer_name || 'Designer M3') + '</p>' +
+            '<h3 class="text-white font-semibold mb-1 leading-snug">' + (p.name_fr || p.name) + '</h3>' +
+            '<div class="flex items-center gap-2 mb-2">' + saleHtml + '</div>' +
+            '<div class="flex items-center gap-1 mb-3">' + tags + '</div>' +
+            '<p class="text-slate-400 text-sm">' + (p.color_primary || '') + (p.material ? ' · ' + p.material : '') + '</p>' +
+            (p.available_sizes ? '<p class="text-slate-400 text-xs mt-2">Tailles: ' + p.available_sizes.join(', ') + '</p>' : '') +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
     function logout() { localStorage.removeItem('auth_token'); window.location.href = '/'; }
+
+    loadProducts();
   </script>
 <script src="/yves-helper.js"></script>
 </body>
