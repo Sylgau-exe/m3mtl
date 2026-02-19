@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styliste IA | M3 Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: { extend: { colors: { brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' } } } }
+    }
+  </script>
+  <style>
+    .fade-in { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes typing { 0%, 60% { opacity: 0.3; } 30% { opacity: 1; } }
+    .typing-dot { animation: typing 1.4s infinite; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    #chatMessages { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-[#0b0b14] min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center"><span class="text-xl">👔</span></div>
+        <span class="text-xl font-bold text-white">M3 <span class="text-brand-400">STYLE</span></span>
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="/dashboard.html" class="text-slate-400 hover:text-white text-sm">Tableau de bord</a>
+        <a href="/wardrobe.html" class="text-slate-400 hover:text-white text-sm">Garde-robe</a>
+        <a href="/marketplace.html" class="text-slate-400 hover:text-white text-sm">Designers</a>
+        <button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1 flex max-w-5xl mx-auto w-full">
+
+    <!-- Sidebar - Conversations -->
+    <aside class="w-64 border-r border-[#1e1e35] p-4 hidden md:block">
+      <button onclick="newConversation()" class="w-full py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-lg font-bold text-sm transition-colors mb-4">+ Nouvelle session</button>
+      <div id="convList" class="space-y-1">
+        <!-- Conversations loaded dynamically -->
+      </div>
+    </aside>
+
+    <!-- Chat Area -->
+    <div class="flex-1 flex flex-col">
+
+      <!-- New Session Setup (shown when no conversation) -->
+      <div id="setupPanel" class="flex-1 flex items-center justify-center p-6">
+        <div class="max-w-md w-full text-center">
+          <div class="text-5xl mb-4">✨</div>
+          <h2 class="text-2xl font-bold text-white mb-2">Votre Styliste IA</h2>
+          <p class="text-slate-400 text-sm mb-6">Décrivez l'occasion et fixez votre budget. Le styliste combinera votre garde-robe avec les créations des designers M3.</p>
+          <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6 text-left space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-slate-300 mb-2">Occasion</label>
+              <select id="occasion" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500">
+                <option value="">Choisir une occasion...</option>
+                <option value="quotidien">Style quotidien</option>
+                <option value="travail">Bureau / Travail</option>
+                <option value="soiree">Soirée</option>
+                <option value="mariage">Mariage</option>
+                <option value="entrevue">Entrevue d'emploi</option>
+                <option value="rendez-vous">Premier rendez-vous</option>
+                <option value="voyage">Voyage</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Budget min ($)</label>
+                <input type="number" id="budgetMin" value="50" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Budget max ($)</label>
+                <input type="number" id="budgetMax" value="300" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500">
+              </div>
+            </div>
+            <button onclick="startSession()" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-lg transition-colors">Démarrer la session →</button>
+          </div>
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
+            <button onclick="quickStart('Je veux un look professionnel pour le bureau')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">👔 Look bureau</button>
+            <button onclick="quickStart('Aide-moi à me préparer pour un premier rendez-vous')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">💝 Premier RDV</button>
+            <button onclick="quickStart('Je cherche un look décontracté mais stylé pour le weekend')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">🏖️ Weekend cool</button>
+            <button onclick="quickStart('Quoi porter pour un mariage cet été?')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">💒 Mariage</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div id="chatPanel" class="hidden flex-1 flex flex-col">
+        <div id="chatMessages" class="flex-1 overflow-y-auto p-6 space-y-4">
+          <!-- Messages loaded dynamically -->
+        </div>
+
+        <!-- Input -->
+        <div class="border-t border-[#1e1e35] p-4">
+          <form onsubmit="sendMessage(event)" class="flex gap-3">
+            <input type="text" id="msgInput" placeholder="Décrivez ce que vous cherchez..." class="flex-1 px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" autocomplete="off">
+            <button type="submit" id="sendBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('auth_token');
+    if (!token) window.location.href = '/';
+
+    let currentConvId = null;
+
+    async function loadConversations() {
+      try {
+        const res = await fetch('/api/stylist/chat', { headers: { 'Authorization': 'Bearer ' + token } });
+        if (!res.ok) return;
+        const data = await res.json();
+        const convs = data.conversations || [];
+        document.getElementById('convList').innerHTML = convs.length === 0
+          ? '<p class="text-slate-500 text-xs text-center py-4">Aucune conversation</p>'
+          : convs.map(c => `
+            <button onclick="loadConversation(${c.id})" class="w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${c.id === currentConvId ? 'bg-brand-500/10 border border-brand-500/20 text-brand-400' : 'text-slate-400 hover:bg-[#1a1a2e]'}">
+              <div class="font-medium truncate">${c.title || c.occasion || 'Session'}</div>
+              <div class="text-xs opacity-60 mt-0.5">${new Date(c.updated_at).toLocaleDateString('fr-CA')}</div>
+            </button>
+          `).join('');
+      } catch(e) { console.log('Conversations not loaded:', e); }
+    }
+
+    async function loadConversation(id) {
+      currentConvId = id;
+      try {
+        const res = await fetch(`/api/stylist/chat?conversation_id=${id}`, { headers: { 'Authorization': 'Bearer ' + token } });
+        if (!res.ok) return;
+        const data = await res.json();
+        showChat();
+        renderMessages(data.messages || []);
+        loadConversations(); // Refresh sidebar
+      } catch(e) { console.error(e); }
+    }
+
+    function showChat() {
+      document.getElementById('setupPanel').classList.add('hidden');
+      document.getElementById('chatPanel').classList.remove('hidden');
+      document.getElementById('chatPanel').classList.add('flex');
+    }
+
+    function showSetup() {
+      document.getElementById('setupPanel').classList.remove('hidden');
+      document.getElementById('chatPanel').classList.add('hidden');
+      document.getElementById('chatPanel').classList.remove('flex');
+      currentConvId = null;
+    }
+
+    function renderMessages(messages) {
+      const container = document.getElementById('chatMessages');
+      container.innerHTML = messages.map(m => messageHTML(m.role, m.content)).join('');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function messageHTML(role, content) {
+      if (role === 'user') {
+        return `<div class="flex justify-end fade-in"><div class="bg-brand-500/20 border border-brand-500/20 rounded-2xl rounded-tr-sm px-4 py-3 max-w-lg"><p class="text-white text-sm whitespace-pre-wrap">${escapeHTML(content)}</p></div></div>`;
+      }
+      return `<div class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#131320] border border-[#1e1e35] rounded-2xl rounded-tl-sm px-4 py-3 max-w-2xl"><p class="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHTML(content)}</p></div></div>`;
+    }
+
+    function typingHTML() {
+      return `<div id="typingIndicator" class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#131320] border border-[#1e1e35] rounded-2xl rounded-tl-sm px-4 py-3"><div class="flex gap-1"><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span></div></div></div>`;
+    }
+
+    async function startSession() {
+      const occasion = document.getElementById('occasion').value;
+      const budgetMin = document.getElementById('budgetMin').value;
+      const budgetMax = document.getElementById('budgetMax').value;
+      const msg = occasion
+        ? `Je cherche un look pour: ${occasion}. Budget: ${budgetMin}$ - ${budgetMax}$ CAD. Que me suggères-tu en utilisant ma garde-robe et les designers M3?`
+        : 'Bonjour! J\'aimerais de l\'aide pour créer un nouveau look. Que me suggères-tu?';
+      showChat();
+      await doSend(msg, occasion, budgetMin, budgetMax);
+    }
+
+    function quickStart(msg) {
+      showChat();
+      doSend(msg);
+    }
+
+    async function sendMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById('msgInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+      input.value = '';
+      await doSend(msg);
+    }
+
+    async function doSend(msg, occasion, budgetMin, budgetMax) {
+      const container = document.getElementById('chatMessages');
+      const btn = document.getElementById('sendBtn');
+
+      // Show user message
+      container.innerHTML += messageHTML('user', msg);
+      container.innerHTML += typingHTML();
+      container.scrollTop = container.scrollHeight;
+      btn.disabled = true;
+
+      try {
+        const body = { message: msg };
+        if (currentConvId) body.conversation_id = currentConvId;
+        if (occasion) body.occasion = occasion;
+        if (budgetMin) body.budget_min = parseInt(budgetMin);
+        if (budgetMax) body.budget_max = parseInt(budgetMax);
+
+        const res = await fetch('/api/stylist/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed');
+
+        currentConvId = data.conversation_id;
+
+        // Remove typing, show response
+        const typing = document.getElementById('typingIndicator');
+        if (typing) typing.remove();
+        container.innerHTML += messageHTML('assistant', data.response);
+        container.scrollTop = container.scrollHeight;
+
+        loadConversations();
+      } catch(err) {
+        const typing = document.getElementById('typingIndicator');
+        if (typing) typing.remove();
+        container.innerHTML += messageHTML('assistant', 'Désolé, une erreur est survenue. Réessayez.');
+      } finally { btn.disabled = false; document.getElementById('msgInput').focus(); }
+    }
+
+    function newConversation() { showSetup(); loadConversations(); }
+    function escapeHTML(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+    function logout() { localStorage.removeItem('auth_token'); window.location.href = '/'; }
+
+    loadConversations();
+  </script>
+</body>
+</html>

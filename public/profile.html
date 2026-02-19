@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil | M3 Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: { extend: { colors: { brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' } } } }
+    }
+  </script>
+  <style>
+    .fade-in { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .chip { cursor: pointer; transition: all 0.2s ease; }
+    .chip.selected { background: rgba(196,163,90,0.2); border-color: #C4A35A; color: #C4A35A; }
+  </style>
+</head>
+<body class="bg-[#0b0b14] min-h-screen">
+
+  <!-- Header -->
+  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center"><span class="text-xl">👔</span></div>
+        <span class="text-xl font-bold text-white">M3 <span class="text-brand-400">STYLE</span></span>
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="/dashboard.html" class="text-slate-400 hover:text-white text-sm">Tableau de bord</a>
+        <a href="/wardrobe.html" class="text-slate-400 hover:text-white text-sm">Garde-robe</a>
+        <a href="/stylist.html" class="text-slate-400 hover:text-white text-sm">Styliste IA</a>
+        <button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-3xl mx-auto px-6 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-white">Mon profil</h1>
+      <p class="text-slate-400 mt-1">Vos mensurations et préférences de style pour des recommandations précises</p>
+    </div>
+
+    <div id="successMsg" class="hidden bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl p-4 mb-6 text-sm font-medium fade-in">
+      ✓ Profil sauvegardé avec succès!
+    </div>
+
+    <form onsubmit="saveProfile(event)" class="space-y-8">
+
+      <!-- Mensurations -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-1">📐 Mensurations</h2>
+        <p class="text-slate-400 text-sm mb-6">Pour des recommandations de taille précises</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Taille (cm)</label>
+            <input type="number" id="height_cm" min="100" max="250" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="178">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Poids (kg)</label>
+            <input type="number" id="weight_kg" min="30" max="300" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="80">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Poitrine (cm)</label>
+            <input type="number" id="chest_cm" min="60" max="180" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="100">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Tour de taille (cm)</label>
+            <input type="number" id="waist_cm" min="50" max="180" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="85">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Hanches (cm)</label>
+            <input type="number" id="hips_cm" min="60" max="180" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="98">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Entrejambe (cm)</label>
+            <input type="number" id="inseam_cm" min="50" max="120" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="82">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Épaules (cm)</label>
+            <input type="number" id="shoulder_cm" min="30" max="80" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="46">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Tour de cou (cm)</label>
+            <input type="number" id="neck_cm" min="25" max="60" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="40">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Longueur bras (cm)</label>
+            <input type="number" id="arm_length_cm" min="40" max="100" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="65">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Pointure</label>
+            <input type="text" id="shoe_size" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="10">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Système</label>
+            <select id="shoe_system" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+              <option value="US">US</option>
+              <option value="EU">EU</option>
+              <option value="UK">UK</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body Type -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-1">🧍 Morphologie</h2>
+        <p class="text-slate-400 text-sm mb-4">Aide le styliste IA à optimiser les coupes et proportions</p>
+        <div class="flex flex-wrap gap-2" id="bodyTypeChips">
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="athletic" onclick="selectBodyType(this)">Athlétique</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="slim" onclick="selectBodyType(this)">Mince</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="regular" onclick="selectBodyType(this)">Régulier</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="stocky" onclick="selectBodyType(this)">Costaud</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="tall" onclick="selectBodyType(this)">Grand & mince</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="large" onclick="selectBodyType(this)">Corpulent</button>
+        </div>
+        <input type="hidden" id="body_type">
+      </div>
+
+      <!-- Style Preferences -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-1">🎨 Préférences de style</h2>
+        <p class="text-slate-400 text-sm mb-4">Sélectionnez tout ce qui vous correspond (plusieurs choix possibles)</p>
+        <div class="flex flex-wrap gap-2" id="styleChips">
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="classique" onclick="toggleChip(this, 'style')">Classique</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="moderne" onclick="toggleChip(this, 'style')">Moderne</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="casual" onclick="toggleChip(this, 'style')">Casual</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="streetwear" onclick="toggleChip(this, 'style')">Streetwear</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="business" onclick="toggleChip(this, 'style')">Business</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="boheme" onclick="toggleChip(this, 'style')">Bohème</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="minimaliste" onclick="toggleChip(this, 'style')">Minimaliste</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="preppy" onclick="toggleChip(this, 'style')">Preppy</button>
+        </div>
+      </div>
+
+      <!-- Preferred Fit -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-1">👕 Coupe préférée</h2>
+        <div class="flex flex-wrap gap-2 mt-4" id="fitChips">
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="slim" onclick="selectFit(this)">Slim fit</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="regular" onclick="selectFit(this)">Regular fit</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="relaxed" onclick="selectFit(this)">Relaxed fit</button>
+          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="oversized" onclick="selectFit(this)">Oversized</button>
+        </div>
+        <input type="hidden" id="preferred_fit">
+      </div>
+
+      <!-- Colors -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-1">🎨 Couleurs</h2>
+        <div class="grid md:grid-cols-2 gap-6 mt-4">
+          <div>
+            <p class="text-slate-300 text-sm font-medium mb-3">Couleurs préférées</p>
+            <div class="flex flex-wrap gap-2" id="colorChips">
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="noir" onclick="toggleChip(this, 'color')">⬛ Noir</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="marine" onclick="toggleChip(this, 'color')">🔵 Marine</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="gris" onclick="toggleChip(this, 'color')">⬜ Gris</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="blanc" onclick="toggleChip(this, 'color')">⬜ Blanc</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="beige" onclick="toggleChip(this, 'color')">🟤 Beige</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="brun" onclick="toggleChip(this, 'color')">🟫 Brun</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="vert" onclick="toggleChip(this, 'color')">🟢 Vert</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="bordeaux" onclick="toggleChip(this, 'color')">🔴 Bordeaux</button>
+            </div>
+          </div>
+          <div>
+            <p class="text-slate-300 text-sm font-medium mb-3">Couleurs à éviter</p>
+            <div class="flex flex-wrap gap-2" id="avoidColorChips">
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="rose" onclick="toggleChip(this, 'avoidColor')">🩷 Rose</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="orange" onclick="toggleChip(this, 'avoidColor')">🟠 Orange</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="jaune" onclick="toggleChip(this, 'avoidColor')">🟡 Jaune</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="violet" onclick="toggleChip(this, 'avoidColor')">🟣 Violet</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="rouge" onclick="toggleChip(this, 'avoidColor')">🔴 Rouge</button>
+              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="neon" onclick="toggleChip(this, 'avoidColor')">💚 Néon</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-1">💰 Budget</h2>
+        <p class="text-slate-400 text-sm mb-4">Fourchette de prix pour les recommandations (par article, en $CAD)</p>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Minimum ($)</label>
+            <input type="number" id="budget_min" min="0" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="50" value="50">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-300 mb-2">Maximum ($)</label>
+            <input type="number" id="budget_max" min="0" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="500" value="500">
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex gap-4">
+        <button type="submit" id="saveBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3 rounded-lg font-bold text-sm transition-colors">Sauvegarder mon profil</button>
+        <a href="/dashboard.html" class="border border-[#2a2a45] hover:border-brand-500/50 text-slate-300 hover:text-white px-8 py-3 rounded-lg font-medium text-sm transition-colors">Retour</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('auth_token');
+    if (!token) window.location.href = '/';
+
+    const selections = { style: [], color: [], avoidColor: [] };
+
+    function selectBodyType(el) {
+      document.querySelectorAll('#bodyTypeChips .chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('body_type').value = el.dataset.value;
+    }
+
+    function selectFit(el) {
+      document.querySelectorAll('#fitChips .chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('preferred_fit').value = el.dataset.value;
+    }
+
+    function toggleChip(el, group) {
+      el.classList.toggle('selected');
+      const val = el.dataset.value;
+      if (selections[group].includes(val)) {
+        selections[group] = selections[group].filter(v => v !== val);
+      } else {
+        selections[group].push(val);
+      }
+    }
+
+    // Load existing profile
+    async function loadProfile() {
+      try {
+        const res = await fetch('/api/profile', { headers: { 'Authorization': 'Bearer ' + token } });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.profile) return;
+        const p = data.profile;
+
+        // Fill measurement fields
+        const fields = ['height_cm','weight_kg','chest_cm','waist_cm','hips_cm','inseam_cm','shoulder_cm','neck_cm','arm_length_cm','shoe_size','shoe_system','budget_min','budget_max'];
+        fields.forEach(f => { if (p[f] && document.getElementById(f)) { document.getElementById(f).value = p[f]; } });
+
+        // Body type
+        if (p.body_type) {
+          const bt = document.querySelector(`#bodyTypeChips .chip[data-value="${p.body_type}"]`);
+          if (bt) { bt.classList.add('selected'); document.getElementById('body_type').value = p.body_type; }
+        }
+
+        // Fit
+        if (p.preferred_fit) {
+          const ft = document.querySelector(`#fitChips .chip[data-value="${p.preferred_fit}"]`);
+          if (ft) { ft.classList.add('selected'); document.getElementById('preferred_fit').value = p.preferred_fit; }
+        }
+
+        // Style preferences
+        if (p.style_preferences) {
+          p.style_preferences.forEach(v => {
+            const chip = document.querySelector(`#styleChips .chip[data-value="${v}"]`);
+            if (chip) { chip.classList.add('selected'); selections.style.push(v); }
+          });
+        }
+
+        // Colors
+        if (p.preferred_colors) {
+          p.preferred_colors.forEach(v => {
+            const chip = document.querySelector(`#colorChips .chip[data-value="${v}"]`);
+            if (chip) { chip.classList.add('selected'); selections.color.push(v); }
+          });
+        }
+        if (p.avoid_colors) {
+          p.avoid_colors.forEach(v => {
+            const chip = document.querySelector(`#avoidColorChips .chip[data-value="${v}"]`);
+            if (chip) { chip.classList.add('selected'); selections.avoidColor.push(v); }
+          });
+        }
+      } catch(e) { console.log('Profile not loaded:', e); }
+    }
+
+    async function saveProfile(e) {
+      e.preventDefault();
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true; btn.textContent = 'Sauvegarde...';
+
+      const body = {
+        height_cm: parseInt(document.getElementById('height_cm').value) || null,
+        weight_kg: parseInt(document.getElementById('weight_kg').value) || null,
+        chest_cm: parseInt(document.getElementById('chest_cm').value) || null,
+        waist_cm: parseInt(document.getElementById('waist_cm').value) || null,
+        hips_cm: parseInt(document.getElementById('hips_cm').value) || null,
+        inseam_cm: parseInt(document.getElementById('inseam_cm').value) || null,
+        shoulder_cm: parseInt(document.getElementById('shoulder_cm').value) || null,
+        neck_cm: parseInt(document.getElementById('neck_cm').value) || null,
+        arm_length_cm: parseInt(document.getElementById('arm_length_cm').value) || null,
+        shoe_size: document.getElementById('shoe_size').value || null,
+        shoe_system: document.getElementById('shoe_system').value,
+        body_type: document.getElementById('body_type').value || null,
+        style_preferences: selections.style.length > 0 ? selections.style : null,
+        preferred_colors: selections.color.length > 0 ? selections.color : null,
+        avoid_colors: selections.avoidColor.length > 0 ? selections.avoidColor : null,
+        preferred_fit: document.getElementById('preferred_fit').value || null,
+        budget_min: parseInt(document.getElementById('budget_min').value) || 0,
+        budget_max: parseInt(document.getElementById('budget_max').value) || 500,
+      };
+
+      try {
+        const res = await fetch('/api/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) throw new Error('Save failed');
+        document.getElementById('successMsg').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => document.getElementById('successMsg').classList.add('hidden'), 4000);
+      } catch(err) { alert('Erreur: ' + err.message); }
+      finally { btn.disabled = false; btn.textContent = 'Sauvegarder mon profil'; }
+    }
+
+    function logout() { localStorage.removeItem('auth_token'); window.location.href = '/'; }
+    loadProfile();
+  </script>
+</body>
+</html>

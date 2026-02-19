@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes looks | M3 Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: { extend: { colors: { brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' } } } }
+    }
+  </script>
+</head>
+<body class="bg-[#0b0b14] min-h-screen">
+
+  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center"><span class="text-xl">👔</span></div>
+        <span class="text-xl font-bold text-white">M3 <span class="text-brand-400">STYLE</span></span>
+      </a>
+      <div class="flex items-center gap-4">
+        <a href="/dashboard.html" class="text-slate-400 hover:text-white text-sm">Tableau de bord</a>
+        <a href="/wardrobe.html" class="text-slate-400 hover:text-white text-sm">Garde-robe</a>
+        <a href="/stylist.html" class="text-slate-400 hover:text-white text-sm">Styliste IA</a>
+        <a href="/marketplace.html" class="text-slate-400 hover:text-white text-sm">Designers</a>
+        <button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-white">Mes looks</h1>
+        <p class="text-slate-400 mt-1">Vos tenues sauvegardées et favorites</p>
+      </div>
+    </div>
+
+    <div id="looksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dynamic looks -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="text-center py-20">
+      <div class="text-6xl mb-4 opacity-30">💎</div>
+      <h2 class="text-xl font-bold text-white mb-2">Aucun look sauvegardé</h2>
+      <p class="text-slate-400 mb-6 max-w-md mx-auto">Commencez une session avec le styliste IA pour créer et sauvegarder vos premiers looks.</p>
+      <a href="/stylist.html" class="inline-block bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors">Créer un look avec le styliste IA →</a>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('auth_token');
+    if (!token) window.location.href = '/';
+
+    async function loadLooks() {
+      // Looks will be loaded from /api/looks when implemented
+      // For now show empty state
+    }
+
+    function logout() { localStorage.removeItem('auth_token'); window.location.href = '/'; }
+    loadLooks();
+  </script>
+</body>
+</html>
