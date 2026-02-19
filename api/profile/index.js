@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         height_cm, weight_kg, chest_cm, waist_cm, hips_cm, inseam_cm,
         shoulder_cm, neck_cm, arm_length_cm, shoe_size, shoe_system,
         body_type, style_preferences, preferred_colors, avoid_colors,
-        preferred_fit, budget_min, budget_max
+        preferred_fit, budget_min, budget_max, photo_url
       } = req.body;
 
       // Check if profile exists
@@ -56,6 +56,7 @@ export default async function handler(req, res) {
             preferred_fit = ${preferred_fit || null},
             budget_min = ${budget_min || 0},
             budget_max = ${budget_max || 500},
+            photo_url = COALESCE(${photo_url || null}, photo_url),
             updated_at = CURRENT_TIMESTAMP
           WHERE user_id = ${userId}
           RETURNING *
@@ -66,14 +67,14 @@ export default async function handler(req, res) {
             user_id, height_cm, weight_kg, chest_cm, waist_cm, hips_cm, inseam_cm,
             shoulder_cm, neck_cm, arm_length_cm, shoe_size, shoe_system,
             body_type, style_preferences, preferred_colors, avoid_colors,
-            preferred_fit, budget_min, budget_max
+            preferred_fit, budget_min, budget_max, photo_url
           ) VALUES (
             ${userId}, ${height_cm || null}, ${weight_kg || null}, ${chest_cm || null},
             ${waist_cm || null}, ${hips_cm || null}, ${inseam_cm || null},
             ${shoulder_cm || null}, ${neck_cm || null}, ${arm_length_cm || null},
             ${shoe_size || null}, ${shoe_system || 'US'}, ${body_type || null},
             ${style_preferences || null}, ${preferred_colors || null}, ${avoid_colors || null},
-            ${preferred_fit || null}, ${budget_min || 0}, ${budget_max || 500}
+            ${preferred_fit || null}, ${budget_min || 0}, ${budget_max || 500}, ${photo_url || null}
           ) RETURNING *
         `;
       }
@@ -87,3 +88,11 @@ export default async function handler(req, res) {
 
   return res.status(405).json({ error: 'Method not allowed' });
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "5mb",
+    },
+  },
+};

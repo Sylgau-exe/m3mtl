@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/tryon/generate.js": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     { "source": "/dashboard", "destination": "/dashboard.html" },
     { "source": "/wardrobe", "destination": "/wardrobe.html" },
