@@ -22,15 +22,28 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'FASHN API key not configured' });
   }
 
+  // Reject placeholder images
+  if (garment_image.includes('placehold.co') || garment_image.includes('placeholder')) {
+    return res.status(400).json({ 
+      error: "L'image du produit est un placeholder. L'essayage virtuel necessite une vraie photo du vetement.",
+      code: 'PLACEHOLDER_IMAGE'
+    });
+  }
+
   try {
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${FASHN_API_KEY}`
+      'Authorization': 'Bearer ' + FASHN_API_KEY
     };
 
+    // FASHN accepts both URLs and base64 data URIs
+    console.log('FASHN try-on:', {
+      model: model_image.startsWith('data:') ? 'base64(' + Math.round(model_image.length/1024) + 'KB)' : 'url',
+      garment: garment_image.startsWith('data:') ? 'base64(' + Math.round(garment_image.length/1024) + 'KB)' : garment_image.substring(0, 80)
+    });
+
     // 1. Submit prediction
-    console.log('Submitting FASHN try-on prediction...');
-    const runRes = await fetch(`${FASHN_BASE}/run`, {
+    const runRes = await fetch(FASHN_BASE + '/run', {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -42,61 +55,43 @@ export default async function handler(req, res) {
       })
     });
 
+    const runData = await runRes.json();
     if (!runRes.ok) {
-      const errBody = await runRes.text();
-      console.error('FASHN run error:', runRes.status, errBody);
-      return res.status(500).json({ error: 'FASHN submission failed: ' + runRes.status });
+      console.error('FASHN run error:', runRes.status, JSON.stringify(runData));
+      return res.status(500).json({ error: 'FASHN: ' + (runData.message || runData.error || runRes.status), detail: runData });
     }
 
-    const runData = await runRes.json();
     const predictionId = runData.id;
-    console.log('FASHN prediction ID:', predictionId);
+    if (!predictionId) {
+      return res.status(500).json({ error: 'No prediction ID', detail: runData });
+    }
+    console.log('Prediction ID:', predictionId);
 
-    // 2. Poll for completion (max 60 seconds)
-    const maxPolls = 30;
-    const pollInterval = 2000; // 2 seconds
-    
-    for (let i = 0; i < maxPolls; i++) {
-      await new Promise(resolve => setTimeout(resolve, pollInterval));
-
-      const statusRes = await fetch(`${FASHN_BASE}/status/${predictionId}`, { headers });
+    // 2. Poll for completion (max 60s)
+    for (let i = 0; i < 30; i++) {
+      await new Promise(r => setTimeout(r, 2000));
+      const statusRes = await fetch(FASHN_BASE + '/status/' + predictionId, { headers });
       const statusData = await statusRes.json();
-
-      console.log(`Poll ${i + 1}: status=${statusData.status}`);
+      console.log('Poll ' + (i+1) + ': ' + statusData.status);
 
       if (statusData.status === 'completed') {
-        const outputUrl = statusData.output?.[0];
-        if (!outputUrl) {
-          return res.status(500).json({ error: 'No output image returned' });
-        }
+        const outputUrl = statusData.output && statusData.output[0];
+        if (!outputUrl) return res.status(500).json({ error: 'No output image' });
 
-        // Track recommendation if product_id provided
         if (product_id) {
-          try {
-            const sql = getSQL();
-            await sql`UPDATE products SET view_count = view_count + 1 WHERE id = ${product_id}`;
-          } catch(e) {}
+          try { const sql = getSQL(); await sql`UPDATE products SET view_count = view_count + 1 WHERE id = ${product_id}`; } catch(e) {}
         }
-
-        return res.status(200).json({
-          success: true,
-          image_url: outputUrl,
-          prediction_id: predictionId
-        });
+        return res.status(200).json({ success: true, image_url: outputUrl, prediction_id: predictionId });
       }
 
       if (statusData.status === 'failed') {
-        console.error('FASHN prediction failed:', statusData.error);
-        return res.status(500).json({
-          error: 'Try-on generation failed',
-          detail: statusData.error?.message || 'Unknown error'
-        });
+        const errMsg = statusData.error ? (statusData.error.message || statusData.error.name || JSON.stringify(statusData.error)) : 'Unknown';
+        console.error('FASHN failed:', errMsg);
+        return res.status(500).json({ error: 'Try-on generation failed: ' + errMsg });
       }
     }
 
-    // Timeout
-    return res.status(408).json({ error: 'Try-on generation timed out', prediction_id: predictionId });
-
+    return res.status(408).json({ error: 'Timeout after 60s', prediction_id: predictionId });
   } catch (error) {
     console.error('Try-on error:', error);
     return res.status(500).json({ error: 'Server error: ' + error.message });
@@ -104,8 +99,6 @@ export default async function handler(req, res) {
 }
 
 export const config = {
-  api: {
-    bodyParser: { sizeLimit: '5mb' },
-  },
-  maxDuration: 60, // Allow 60s for Vercel function
+  api: { bodyParser: { sizeLimit: '10mb' } },
+  maxDuration: 60,
 };

@@ -335,12 +335,19 @@
           })
         });
         var tryData = await tryRes.json();
+        console.log('Try-on result:', tryData);
 
         // Remove loading
         var loadEl = document.getElementById(loadingId);
         if (loadEl) loadEl.remove();
 
-        if (tryData.success && tryData.image_url) {
+        if (tryData.code === 'PLACEHOLDER_IMAGE') {
+          // Placeholder — show friendly message
+          chatEl.insertAdjacentHTML('beforeend',
+            '<div class="flex gap-3 fade-in"><div class="w-8 h-8 rounded-lg flex-shrink-0 overflow-hidden"><img src="/yves-avatar.png" alt="Yves" class="w-full h-full object-cover"></div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3"><p class="text-amber-400 text-sm">L\'essayage virtuel n\'est pas encore disponible pour ce produit — il nous faut une vraie photo du vetement. Bientot disponible!</p></div></div>'
+          );
+          chatEl.scrollTop = chatEl.scrollHeight;
+        } else if (tryData.success && tryData.image_url) {
           // Show result in chat
           chatEl.insertAdjacentHTML('beforeend',
             '<div class="flex gap-3 fade-in"><div class="w-8 h-8 rounded-lg flex-shrink-0 overflow-hidden"><img src="/yves-avatar.png" alt="Yves" class="w-full h-full object-cover"></div><div class="bg-[#0d0d14] border border-brand-500/20 rounded-2xl rounded-tl-sm px-4 py-3 max-w-2xl">' +
@@ -354,7 +361,7 @@
           chatEl.scrollTop = chatEl.scrollHeight;
         } else {
           chatEl.insertAdjacentHTML('beforeend',
-            '<div class="flex gap-3 fade-in"><div class="w-8 h-8 rounded-lg flex-shrink-0 overflow-hidden"><img src="/yves-avatar.png" alt="Yves" class="w-full h-full object-cover"></div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3"><p class="text-amber-400 text-sm">L\'essayage n\'a pas fonctionne: ' + (tryData.error || 'erreur inconnue') + '</p></div></div>'
+            '<div class="flex gap-3 fade-in"><div class="w-8 h-8 rounded-lg flex-shrink-0 overflow-hidden"><img src="/yves-avatar.png" alt="Yves" class="w-full h-full object-cover"></div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3"><p class="text-amber-400 text-sm">L\'essayage n\'a pas fonctionne: ' + escapeHTML(tryData.error || 'erreur inconnue') + '</p></div></div>'
           );
           chatEl.scrollTop = chatEl.scrollHeight;
         }
