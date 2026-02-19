@@ -364,6 +364,7 @@
             material: document.getElementById('itemMaterial').value || null,
             fit: document.getElementById('itemFit').value || null,
             pattern: document.getElementById('itemPattern').value || null,
+            image_url: currentPhotoBase64 || null,
           })
         });
         if (!res.ok) { const d = await res.json(); throw new Error(d.error || 'Failed'); }
