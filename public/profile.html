@@ -4,23 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon profil | M3 Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwindcss.config = {
-      theme: { extend: { colors: { brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' } } } }
+      theme: { extend: { colors: { brand: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' } } } }
     }
   </script>
   <style>
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .chip { cursor: pointer; transition: all 0.2s ease; }
-    .chip.selected { background: rgba(196,163,90,0.2); border-color: #C4A35A; color: #C4A35A; }
+    .chip.selected { background: rgba(99,102,241,0.2); border-color: #6366f1; color: #818cf8; }
   </style>
 </head>
-<body class="bg-[#0b0b14] min-h-screen">
+<body class="bg-[#05050a] min-h-screen">
 
   <!-- Header -->
-  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+  <header class="border-b border-white/5 bg-[#05050a]/95 sticky top-0 z-50 backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
         <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center"><span class="text-xl">👔</span></div>
@@ -48,55 +51,55 @@
     <form onsubmit="saveProfile(event)" class="space-y-8">
 
       <!-- Mensurations -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white mb-1">📐 Mensurations</h2>
         <p class="text-slate-400 text-sm mb-6">Pour des recommandations de taille précises</p>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Taille (cm)</label>
-            <input type="number" id="height_cm" min="100" max="250" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="178">
+            <input type="number" id="height_cm" min="100" max="250" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="178">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Poids (kg)</label>
-            <input type="number" id="weight_kg" min="30" max="300" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="80">
+            <input type="number" id="weight_kg" min="30" max="300" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="80">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Poitrine (cm)</label>
-            <input type="number" id="chest_cm" min="60" max="180" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="100">
+            <input type="number" id="chest_cm" min="60" max="180" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="100">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Tour de taille (cm)</label>
-            <input type="number" id="waist_cm" min="50" max="180" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="85">
+            <input type="number" id="waist_cm" min="50" max="180" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="85">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Hanches (cm)</label>
-            <input type="number" id="hips_cm" min="60" max="180" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="98">
+            <input type="number" id="hips_cm" min="60" max="180" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="98">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Entrejambe (cm)</label>
-            <input type="number" id="inseam_cm" min="50" max="120" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="82">
+            <input type="number" id="inseam_cm" min="50" max="120" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="82">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Épaules (cm)</label>
-            <input type="number" id="shoulder_cm" min="30" max="80" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="46">
+            <input type="number" id="shoulder_cm" min="30" max="80" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="46">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Tour de cou (cm)</label>
-            <input type="number" id="neck_cm" min="25" max="60" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="40">
+            <input type="number" id="neck_cm" min="25" max="60" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="40">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Longueur bras (cm)</label>
-            <input type="number" id="arm_length_cm" min="40" max="100" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="65">
+            <input type="number" id="arm_length_cm" min="40" max="100" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="65">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 mt-4">
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Pointure</label>
-            <input type="text" id="shoe_size" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="10">
+            <input type="text" id="shoe_size" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="10">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Système</label>
-            <select id="shoe_system" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+            <select id="shoe_system" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
               <option value="US">US</option>
               <option value="EU">EU</option>
               <option value="UK">UK</option>
@@ -106,91 +109,91 @@
       </div>
 
       <!-- Body Type -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white mb-1">🧍 Morphologie</h2>
         <p class="text-slate-400 text-sm mb-4">Aide le styliste IA à optimiser les coupes et proportions</p>
         <div class="flex flex-wrap gap-2" id="bodyTypeChips">
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="athletic" onclick="selectBodyType(this)">Athlétique</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="slim" onclick="selectBodyType(this)">Mince</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="regular" onclick="selectBodyType(this)">Régulier</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="stocky" onclick="selectBodyType(this)">Costaud</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="tall" onclick="selectBodyType(this)">Grand & mince</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="large" onclick="selectBodyType(this)">Corpulent</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="athletic" onclick="selectBodyType(this)">Athlétique</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="slim" onclick="selectBodyType(this)">Mince</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="regular" onclick="selectBodyType(this)">Régulier</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="stocky" onclick="selectBodyType(this)">Costaud</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="tall" onclick="selectBodyType(this)">Grand & mince</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="large" onclick="selectBodyType(this)">Corpulent</button>
         </div>
         <input type="hidden" id="body_type">
       </div>
 
       <!-- Style Preferences -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white mb-1">🎨 Préférences de style</h2>
         <p class="text-slate-400 text-sm mb-4">Sélectionnez tout ce qui vous correspond (plusieurs choix possibles)</p>
         <div class="flex flex-wrap gap-2" id="styleChips">
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="classique" onclick="toggleChip(this, 'style')">Classique</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="moderne" onclick="toggleChip(this, 'style')">Moderne</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="casual" onclick="toggleChip(this, 'style')">Casual</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="streetwear" onclick="toggleChip(this, 'style')">Streetwear</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="business" onclick="toggleChip(this, 'style')">Business</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="boheme" onclick="toggleChip(this, 'style')">Bohème</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="minimaliste" onclick="toggleChip(this, 'style')">Minimaliste</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="preppy" onclick="toggleChip(this, 'style')">Preppy</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="classique" onclick="toggleChip(this, 'style')">Classique</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="moderne" onclick="toggleChip(this, 'style')">Moderne</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="casual" onclick="toggleChip(this, 'style')">Casual</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="streetwear" onclick="toggleChip(this, 'style')">Streetwear</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="business" onclick="toggleChip(this, 'style')">Business</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="boheme" onclick="toggleChip(this, 'style')">Bohème</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="minimaliste" onclick="toggleChip(this, 'style')">Minimaliste</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="preppy" onclick="toggleChip(this, 'style')">Preppy</button>
         </div>
       </div>
 
       <!-- Preferred Fit -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white mb-1">👕 Coupe préférée</h2>
         <div class="flex flex-wrap gap-2 mt-4" id="fitChips">
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="slim" onclick="selectFit(this)">Slim fit</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="regular" onclick="selectFit(this)">Regular fit</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="relaxed" onclick="selectFit(this)">Relaxed fit</button>
-          <button type="button" class="chip px-4 py-2 border border-[#2a2a45] rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="oversized" onclick="selectFit(this)">Oversized</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="slim" onclick="selectFit(this)">Slim fit</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="regular" onclick="selectFit(this)">Regular fit</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="relaxed" onclick="selectFit(this)">Relaxed fit</button>
+          <button type="button" class="chip px-4 py-2 border border-white/10 rounded-lg text-sm text-slate-400 hover:border-brand-500/50" data-value="oversized" onclick="selectFit(this)">Oversized</button>
         </div>
         <input type="hidden" id="preferred_fit">
       </div>
 
       <!-- Colors -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white mb-1">🎨 Couleurs</h2>
         <div class="grid md:grid-cols-2 gap-6 mt-4">
           <div>
             <p class="text-slate-300 text-sm font-medium mb-3">Couleurs préférées</p>
             <div class="flex flex-wrap gap-2" id="colorChips">
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="noir" onclick="toggleChip(this, 'color')">⬛ Noir</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="marine" onclick="toggleChip(this, 'color')">🔵 Marine</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="gris" onclick="toggleChip(this, 'color')">⬜ Gris</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="blanc" onclick="toggleChip(this, 'color')">⬜ Blanc</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="beige" onclick="toggleChip(this, 'color')">🟤 Beige</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="brun" onclick="toggleChip(this, 'color')">🟫 Brun</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="vert" onclick="toggleChip(this, 'color')">🟢 Vert</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="bordeaux" onclick="toggleChip(this, 'color')">🔴 Bordeaux</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="noir" onclick="toggleChip(this, 'color')">⬛ Noir</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="marine" onclick="toggleChip(this, 'color')">🔵 Marine</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="gris" onclick="toggleChip(this, 'color')">⬜ Gris</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="blanc" onclick="toggleChip(this, 'color')">⬜ Blanc</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="beige" onclick="toggleChip(this, 'color')">🟤 Beige</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="brun" onclick="toggleChip(this, 'color')">🟫 Brun</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="vert" onclick="toggleChip(this, 'color')">🟢 Vert</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="bordeaux" onclick="toggleChip(this, 'color')">🔴 Bordeaux</button>
             </div>
           </div>
           <div>
             <p class="text-slate-300 text-sm font-medium mb-3">Couleurs à éviter</p>
             <div class="flex flex-wrap gap-2" id="avoidColorChips">
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="rose" onclick="toggleChip(this, 'avoidColor')">🩷 Rose</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="orange" onclick="toggleChip(this, 'avoidColor')">🟠 Orange</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="jaune" onclick="toggleChip(this, 'avoidColor')">🟡 Jaune</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="violet" onclick="toggleChip(this, 'avoidColor')">🟣 Violet</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="rouge" onclick="toggleChip(this, 'avoidColor')">🔴 Rouge</button>
-              <button type="button" class="chip px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="neon" onclick="toggleChip(this, 'avoidColor')">💚 Néon</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="rose" onclick="toggleChip(this, 'avoidColor')">🩷 Rose</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="orange" onclick="toggleChip(this, 'avoidColor')">🟠 Orange</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="jaune" onclick="toggleChip(this, 'avoidColor')">🟡 Jaune</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="violet" onclick="toggleChip(this, 'avoidColor')">🟣 Violet</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="rouge" onclick="toggleChip(this, 'avoidColor')">🔴 Rouge</button>
+              <button type="button" class="chip px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/50" data-value="neon" onclick="toggleChip(this, 'avoidColor')">💚 Néon</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Budget -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white mb-1">💰 Budget</h2>
         <p class="text-slate-400 text-sm mb-4">Fourchette de prix pour les recommandations (par article, en $CAD)</p>
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Minimum ($)</label>
-            <input type="number" id="budget_min" min="0" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="50" value="50">
+            <input type="number" id="budget_min" min="0" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="50" value="50">
           </div>
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-2">Maximum ($)</label>
-            <input type="number" id="budget_max" min="0" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="500" value="500">
+            <input type="number" id="budget_max" min="0" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="500" value="500">
           </div>
         </div>
       </div>
@@ -198,7 +201,7 @@
       <!-- Submit -->
       <div class="flex gap-4">
         <button type="submit" id="saveBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3 rounded-lg font-bold text-sm transition-colors">Sauvegarder mon profil</button>
-        <a href="/dashboard.html" class="border border-[#2a2a45] hover:border-brand-500/50 text-slate-300 hover:text-white px-8 py-3 rounded-lg font-medium text-sm transition-colors">Retour</a>
+        <a href="/dashboard.html" class="border border-white/10 hover:border-brand-500/50 text-slate-300 hover:text-white px-8 py-3 rounded-lg font-medium text-sm transition-colors">Retour</a>
       </div>
     </form>
   </div>

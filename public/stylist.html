@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Styliste IA | M3 Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwindcss.config = {
-      theme: { extend: { colors: { brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' } } } }
+      theme: { extend: { colors: { brand: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' } } } }
     }
   </script>
   <style>
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes typing { 0%, 60% { opacity: 0.3; } 30% { opacity: 1; } }
@@ -20,10 +23,10 @@
     #chatMessages { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="bg-[#0b0b14] min-h-screen flex flex-col">
+<body class="bg-[#05050a] min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+  <header class="border-b border-white/5 bg-[#05050a]/95 sticky top-0 z-50 backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
         <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center"><span class="text-xl">👔</span></div>
@@ -41,7 +44,7 @@
   <div class="flex-1 flex max-w-5xl mx-auto w-full">
 
     <!-- Sidebar - Conversations -->
-    <aside class="w-64 border-r border-[#1e1e35] p-4 hidden md:block">
+    <aside class="w-64 border-r border-white/5 p-4 hidden md:block">
       <button onclick="newConversation()" class="w-full py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-lg font-bold text-sm transition-colors mb-4">+ Nouvelle session</button>
       <div id="convList" class="space-y-1">
         <!-- Conversations loaded dynamically -->
@@ -57,10 +60,10 @@
           <div class="text-5xl mb-4">✨</div>
           <h2 class="text-2xl font-bold text-white mb-2">Votre Styliste IA</h2>
           <p class="text-slate-400 text-sm mb-6">Décrivez l'occasion et fixez votre budget. Le styliste combinera votre garde-robe avec les créations des designers M3.</p>
-          <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-6 text-left space-y-4">
+          <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-left space-y-4">
             <div>
               <label class="block text-sm font-medium text-slate-300 mb-2">Occasion</label>
-              <select id="occasion" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500">
+              <select id="occasion" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white focus:ring-2 focus:ring-brand-500">
                 <option value="">Choisir une occasion...</option>
                 <option value="quotidien">Style quotidien</option>
                 <option value="travail">Bureau / Travail</option>
@@ -75,20 +78,20 @@
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Budget min ($)</label>
-                <input type="number" id="budgetMin" value="50" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500">
+                <input type="number" id="budgetMin" value="50" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white focus:ring-2 focus:ring-brand-500">
               </div>
               <div>
                 <label class="block text-sm font-medium text-slate-300 mb-2">Budget max ($)</label>
-                <input type="number" id="budgetMax" value="300" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white focus:ring-2 focus:ring-brand-500">
+                <input type="number" id="budgetMax" value="300" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white focus:ring-2 focus:ring-brand-500">
               </div>
             </div>
             <button onclick="startSession()" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-lg transition-colors">Démarrer la session →</button>
           </div>
           <div class="mt-6 flex flex-wrap justify-center gap-2">
-            <button onclick="quickStart('Je veux un look professionnel pour le bureau')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">👔 Look bureau</button>
-            <button onclick="quickStart('Aide-moi à me préparer pour un premier rendez-vous')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">💝 Premier RDV</button>
-            <button onclick="quickStart('Je cherche un look décontracté mais stylé pour le weekend')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">🏖️ Weekend cool</button>
-            <button onclick="quickStart('Quoi porter pour un mariage cet été?')" class="px-3 py-1.5 border border-[#2a2a45] rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">💒 Mariage</button>
+            <button onclick="quickStart('Je veux un look professionnel pour le bureau')" class="px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">👔 Look bureau</button>
+            <button onclick="quickStart('Aide-moi à me préparer pour un premier rendez-vous')" class="px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">💝 Premier RDV</button>
+            <button onclick="quickStart('Je cherche un look décontracté mais stylé pour le weekend')" class="px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">🏖️ Weekend cool</button>
+            <button onclick="quickStart('Quoi porter pour un mariage cet été?')" class="px-3 py-1.5 border border-white/10 rounded-lg text-xs text-slate-400 hover:border-brand-500/30 hover:text-brand-400 transition-colors">💒 Mariage</button>
           </div>
         </div>
       </div>
@@ -100,9 +103,9 @@
         </div>
 
         <!-- Input -->
-        <div class="border-t border-[#1e1e35] p-4">
+        <div class="border-t border-white/5 p-4">
           <form onsubmit="sendMessage(event)" class="flex gap-3">
-            <input type="text" id="msgInput" placeholder="Décrivez ce que vous cherchez..." class="flex-1 px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" autocomplete="off">
+            <input type="text" id="msgInput" placeholder="Décrivez ce que vous cherchez..." class="flex-1 px-4 py-3 bg-[#05050a] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" autocomplete="off">
             <button type="submit" id="sendBtn" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors">Envoyer</button>
           </form>
         </div>
@@ -125,7 +128,7 @@
         document.getElementById('convList').innerHTML = convs.length === 0
           ? '<p class="text-slate-500 text-xs text-center py-4">Aucune conversation</p>'
           : convs.map(c => `
-            <button onclick="loadConversation(${c.id})" class="w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${c.id === currentConvId ? 'bg-brand-500/10 border border-brand-500/20 text-brand-400' : 'text-slate-400 hover:bg-[#1a1a2e]'}">
+            <button onclick="loadConversation(${c.id})" class="w-full text-left px-3 py-2.5 rounded-lg text-sm transition-colors ${c.id === currentConvId ? 'bg-brand-500/10 border border-brand-500/20 text-brand-400' : 'text-slate-400 hover:bg-[#05050a]'}">
               <div class="font-medium truncate">${c.title || c.occasion || 'Session'}</div>
               <div class="text-xs opacity-60 mt-0.5">${new Date(c.updated_at).toLocaleDateString('fr-CA')}</div>
             </button>
@@ -168,11 +171,11 @@
       if (role === 'user') {
         return `<div class="flex justify-end fade-in"><div class="bg-brand-500/20 border border-brand-500/20 rounded-2xl rounded-tr-sm px-4 py-3 max-w-lg"><p class="text-white text-sm whitespace-pre-wrap">${escapeHTML(content)}</p></div></div>`;
       }
-      return `<div class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#131320] border border-[#1e1e35] rounded-2xl rounded-tl-sm px-4 py-3 max-w-2xl"><p class="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHTML(content)}</p></div></div>`;
+      return `<div class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3 max-w-2xl"><p class="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHTML(content)}</p></div></div>`;
     }
 
     function typingHTML() {
-      return `<div id="typingIndicator" class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#131320] border border-[#1e1e35] rounded-2xl rounded-tl-sm px-4 py-3"><div class="flex gap-1"><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span></div></div></div>`;
+      return `<div id="typingIndicator" class="flex gap-3 fade-in"><div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-sm flex-shrink-0">✨</div><div class="bg-[#0d0d14] border border-white/5 rounded-2xl rounded-tl-sm px-4 py-3"><div class="flex gap-1"><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span><span class="typing-dot w-2 h-2 bg-brand-400 rounded-full inline-block"></span></div></div></div>`;
     }
 
     async function startSession() {

@@ -3,134 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M3 Style — Votre Styliste IA Personnel</title>
+  <title>M3 Style - Votre Styliste IA Personnel</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwindcss.config = {
       theme: {
         extend: {
           colors: {
-            brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' }
+            brand: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif']
           }
         }
       }
     }
   </script>
   <style>
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .glow-purple { text-shadow: 0 0 40px rgba(139, 92, 246, 0.5); }
+    .btn-gradient { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%); box-shadow: 0 8px 32px rgba(99, 102, 241, 0.35); }
+    .btn-gradient:hover { box-shadow: 0 8px 40px rgba(99, 102, 241, 0.5); transform: translateY(-1px); }
+    .btn-cta { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%); box-shadow: 0 8px 32px rgba(99, 102, 241, 0.35); }
+    .btn-cta:hover { box-shadow: 0 8px 40px rgba(99, 102, 241, 0.5); }
+    .card-glow:hover { border-color: rgba(139, 92, 246, 0.3); box-shadow: 0 0 30px rgba(139, 92, 246, 0.08); }
+    .stat-bar { background: linear-gradient(180deg, rgba(99,102,241,0.12) 0%, transparent 100%); border: 1px solid rgba(99,102,241,0.15); border-radius: 20px; padding: 2rem 3rem; }
   </style>
 </head>
-<body class="bg-[#0b0b14] text-white min-h-screen">
+<body class="bg-[#05050a] text-white min-h-screen">
 
   <!-- Header -->
-  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-40 backdrop-blur-sm">
+  <header class="border-b border-white/5 bg-[#05050a]/95 sticky top-0 z-40 backdrop-blur-lg">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center">
-          <span class="text-xl">👔</span>
-        </div>
-        <span class="text-xl font-bold text-white">M3 <span class="text-brand-400">STYLE</span></span>
+        <div class="w-9 h-9 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center"><span class="text-lg">&#x1F454;</span></div>
+        <span class="text-xl font-bold font-display text-white">M3<span class="text-brand-400">Style</span></span>
       </a>
-      <div class="hidden md:flex items-center gap-6 text-sm text-slate-400">
+      <div class="hidden md:flex items-center gap-8 text-sm text-slate-400">
         <a href="#comment" class="hover:text-white transition-colors">Comment ça marche</a>
         <a href="#valeur" class="hover:text-white transition-colors">Valeur</a>
         <a href="#prix" class="hover:text-white transition-colors">Prix</a>
       </div>
       <div id="headerNav" class="flex items-center gap-4">
         <button onclick="showAuth('login')" class="text-slate-300 hover:text-white text-sm font-medium">Connexion</button>
-        <button onclick="showAuth('register')" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">Créer mon profil</button>
+        <button onclick="showAuth('register')" class="btn-gradient text-white px-5 py-2 rounded-full text-sm font-bold transition-all">Commencer</button>
       </div>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 py-20 md:py-32">
+  <section class="max-w-6xl mx-auto px-6 pt-20 pb-16 md:pt-32 md:pb-24">
     <div class="max-w-3xl">
-      <div class="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5 mb-6">
-        <span class="text-brand-400 text-sm font-semibold">✨ Propulsé par l'intelligence artificielle</span>
+      <div class="inline-flex items-center gap-2 border border-brand-500/25 rounded-full px-4 py-1.5 mb-8">
+        <span class="text-brand-400 text-sm font-medium">&#x2728; Propulsé par l'intelligence artificielle</span>
       </div>
-      <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
-        Votre garde-robe.<br>Votre style.<br>Votre <span class="text-brand-400">styliste IA.</span>
+      <h1 class="font-display text-5xl md:text-7xl font-bold leading-[1.05] mb-6 tracking-tight">
+        Votre garde-robe.<br>Votre style.<br><span class="text-[#7c6ef6] glow-purple">Votre styliste IA.</span>
       </h1>
-      <p class="text-lg text-slate-400 leading-relaxed mb-8 max-w-2xl">
+      <p class="text-lg text-slate-400 leading-relaxed mb-10 max-w-xl">
         M3 Style combine ce que vous possédez déjà avec les créations des meilleurs designers montréalais. Un styliste personnel IA qui connaît votre corps, votre budget et vos objectifs.
       </p>
-      <div class="flex flex-wrap gap-4">
-        <button onclick="showAuth('register')" class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3 rounded-lg font-bold text-sm transition-colors">Créer mon profil →</button>
-        <a href="#comment" class="border border-[#2a2a45] hover:border-brand-500/50 text-slate-300 hover:text-white px-8 py-3 rounded-lg font-medium text-sm transition-colors">Découvrir</a>
-      </div>
+      <button onclick="showAuth('register')" class="btn-cta text-white px-8 py-4 rounded-full font-bold text-base transition-all">
+        Démarrer une session styliste gratuite
+      </button>
+    </div>
+    <div class="stat-bar flex gap-12 mt-16 inline-flex">
+      <div class="text-center"><div class="text-3xl font-display font-bold text-brand-400 glow-purple">IA</div><div class="text-sm text-slate-500 mt-1">Styliste personnel</div></div>
+      <div class="text-center"><div class="text-3xl font-display font-bold text-brand-400 glow-purple">Mix&amp;Match</div><div class="text-sm text-slate-500 mt-1">Garde-robe + designers</div></div>
+      <div class="text-center"><div class="text-3xl font-display font-bold text-brand-400 glow-purple">M3</div><div class="text-sm text-slate-500 mt-1">Designers montréalais</div></div>
     </div>
   </section>
 
   <!-- How it works -->
-  <section id="comment" class="border-t border-[#1e1e35] bg-[#0d0d18]">
+  <section id="comment" class="border-t border-white/5 bg-[#08080f]">
     <div class="max-w-6xl mx-auto px-6 py-20">
-      <div class="text-center mb-12">
+      <div class="text-center mb-14">
         <p class="text-brand-400 text-sm font-semibold tracking-wider uppercase mb-3">Le parcours</p>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Du placard à l'achat en 5 étapes</h2>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Du placard à l'achat en 5 étapes</h2>
         <p class="text-slate-400 max-w-xl mx-auto">Un parcours fluide qui part de ce que vous avez pour vous mener vers le look parfait.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center hover:border-brand-500/30 transition-colors">
-          <div class="text-3xl mb-3">📐</div>
-          <div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">1</div>
-          <h3 class="font-bold text-sm mb-2">Profil & Mensurations</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Entrez vos mesures et préférences de style.</p>
-        </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center hover:border-brand-500/30 transition-colors">
-          <div class="text-3xl mb-3">📱</div>
-          <div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">2</div>
-          <h3 class="font-bold text-sm mb-2">Garde-robe Numérique</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Photographiez vos vêtements. L'IA catégorise tout.</p>
-        </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center hover:border-brand-500/30 transition-colors">
-          <div class="text-3xl mb-3">🎯</div>
-          <div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">3</div>
-          <h3 class="font-bold text-sm mb-2">Définir l'Objectif</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Mariage, entrevue, soirée? Fixez l'occasion et le budget.</p>
-        </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center hover:border-brand-500/30 transition-colors">
-          <div class="text-3xl mb-3">✨</div>
-          <div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">4</div>
-          <h3 class="font-bold text-sm mb-2">Mix & Match IA</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Le styliste combine vos pièces avec les designers M3.</p>
-        </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center hover:border-brand-500/30 transition-colors">
-          <div class="text-3xl mb-3">🛍️</div>
-          <div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">5</div>
-          <h3 class="font-bold text-sm mb-2">Achat en Confiance</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">Mensurations vérifiées, style validé, budget respecté.</p>
-        </div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center card-glow transition-all"><div class="text-3xl mb-3">&#x1F4D0;</div><div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">1</div><h3 class="font-display font-bold text-sm mb-2">Profil &amp; Mensurations</h3><p class="text-slate-500 text-xs leading-relaxed">Entrez vos mesures et préférences de style.</p></div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center card-glow transition-all"><div class="text-3xl mb-3">&#x1F4F1;</div><div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">2</div><h3 class="font-display font-bold text-sm mb-2">Garde-robe Numérique</h3><p class="text-slate-500 text-xs leading-relaxed">Photographiez vos vêtements. L'IA catégorise tout.</p></div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center card-glow transition-all"><div class="text-3xl mb-3">&#x1F3AF;</div><div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">3</div><h3 class="font-display font-bold text-sm mb-2">Définir l'Objectif</h3><p class="text-slate-500 text-xs leading-relaxed">Mariage, entrevue, soirée? Fixez l'occasion et le budget.</p></div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center card-glow transition-all"><div class="text-3xl mb-3">&#x2728;</div><div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">4</div><h3 class="font-display font-bold text-sm mb-2">Mix &amp; Match IA</h3><p class="text-slate-500 text-xs leading-relaxed">Le styliste combine vos pièces avec les designers M3.</p></div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center card-glow transition-all"><div class="text-3xl mb-3">&#x1F6CD;</div><div class="w-8 h-8 bg-brand-500/10 border border-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-400 text-sm font-bold">5</div><h3 class="font-display font-bold text-sm mb-2">Achat en Confiance</h3><p class="text-slate-500 text-xs leading-relaxed">Mensurations vérifiées, style validé, budget respecté.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- Killer Feature -->
-  <section class="border-t border-[#1e1e35]">
+  <!-- Mix & Match Feature -->
+  <section class="border-t border-white/5">
     <div class="max-w-6xl mx-auto px-6 py-20">
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="flex items-center justify-center gap-4">
-          <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center flex-1">
-            <div class="text-4xl mb-2">👔</div>
-            <p class="text-sm text-slate-400 font-medium">Votre<br>garde-robe</p>
-          </div>
+          <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center flex-1"><div class="text-4xl mb-2">&#x1F454;</div><p class="text-sm text-slate-400 font-medium">Votre<br>garde-robe</p></div>
           <span class="text-brand-400 text-2xl font-bold">+</span>
-          <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 text-center flex-1">
-            <div class="text-4xl mb-2">🎨</div>
-            <p class="text-sm text-slate-400 font-medium">Designer<br>M3</p>
-          </div>
+          <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 text-center flex-1"><div class="text-4xl mb-2">&#x1F3A8;</div><p class="text-sm text-slate-400 font-medium">Designer<br>M3</p></div>
           <span class="text-brand-400 text-2xl font-bold">=</span>
-          <div class="bg-brand-500/10 border border-brand-500/25 rounded-xl p-6 text-center flex-1">
-            <div class="text-4xl mb-2">🔥</div>
-            <p class="text-sm text-brand-400 font-semibold">Le look<br>parfait</p>
-          </div>
+          <div class="bg-brand-500/10 border border-brand-500/25 rounded-2xl p-6 text-center flex-1"><div class="text-4xl mb-2">&#x1F525;</div><p class="text-sm text-brand-400 font-semibold">Le look<br>parfait</p></div>
         </div>
         <div>
           <p class="text-brand-400 text-sm font-semibold tracking-wider uppercase mb-3">Le différenciateur</p>
-          <h2 class="text-3xl font-bold mb-4">Utiliser ce que vous <span class="text-brand-400">possédez déjà</span></h2>
+          <h2 class="font-display text-3xl font-bold mb-4">Utiliser ce que vous <span class="text-brand-400">possédez déjà</span></h2>
           <p class="text-slate-400 leading-relaxed mb-4">La plupart des apps de mode veulent tout vous vendre. M3 Style commence avec ce que vous avez.</p>
-          <p class="text-slate-400 leading-relaxed mb-4">Le styliste IA puise d'abord dans votre garde-robe, puis comble les manques avec des pièces de designers M3. Vous vous sentez respecté, pas « vendu ».</p>
+          <p class="text-slate-400 leading-relaxed mb-4">Le styliste IA puise d'abord dans votre garde-robe, puis comble les manques avec des pièces de designers M3.</p>
           <p class="text-brand-400 font-semibold">Résultat : confiance accrue, conversions élevées, retours réduits.</p>
         </div>
       </div>
@@ -138,218 +120,110 @@
   </section>
 
   <!-- Stakeholder Value -->
-  <section id="valeur" class="border-t border-[#1e1e35] bg-[#0d0d18]">
+  <section id="valeur" class="border-t border-white/5 bg-[#08080f]">
     <div class="max-w-6xl mx-auto px-6 py-20">
-      <div class="text-center mb-12">
+      <div class="text-center mb-14">
         <p class="text-brand-400 text-sm font-semibold tracking-wider uppercase mb-3">Valeur pour tous</p>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Trois mondes connectés</h2>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Trois mondes connectés</h2>
       </div>
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 hover:border-blue-500/30 transition-colors">
-          <div class="text-2xl mb-3">👤</div>
-          <h3 class="font-bold text-lg mb-4">Pour l'homme</h3>
-          <ul class="space-y-2 text-sm text-slate-400">
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Styliste IA disponible 24/7</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Recommandations sur vos vraies mensurations</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Maximisez votre garde-robe existante</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Budget respecté, options personnalisées</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Designers montréalais curés</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Looks prêts pour chaque occasion</li>
-          </ul>
-        </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 hover:border-brand-500/30 transition-colors">
-          <div class="text-2xl mb-3">✂️</div>
-          <h3 class="font-bold text-lg mb-4">Pour le designer</h3>
-          <ul class="space-y-2 text-sm text-slate-400">
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Visibilité à l'année</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Acheteurs pré-qualifiés par l'IA</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Tableau de bord analytique complet</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Relation directe avec les clients</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Retours réduits grâce à l'IA</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Barrière d'entrée minimale</li>
-          </ul>
-        </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 hover:border-purple-500/30 transition-colors">
-          <div class="text-2xl mb-3">🎭</div>
-          <h3 class="font-bold text-lg mb-4">Pour M3</h3>
-          <ul class="space-y-2 text-sm text-slate-400">
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Plateforme active 365 jours par an</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Revenus récurrents entre les événements</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Données sur les tendances</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Portée nationale et internationale</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Leader en innovation techno-mode</li>
-            <li class="flex gap-2"><span class="text-brand-400">▸</span>Compagnon numérique pour événements</li>
-          </ul>
-        </div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 card-glow transition-all"><div class="text-2xl mb-3">&#x1F464;</div><h3 class="font-display font-bold text-lg mb-4">Pour l'homme</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Styliste IA disponible 24/7</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Recommandations sur vos vraies mensurations</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Maximisez votre garde-robe existante</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Budget respecté, options personnalisées</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Designers montréalais curés</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Looks prêts pour chaque occasion</li></ul></div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 card-glow transition-all"><div class="text-2xl mb-3">&#x2702;</div><h3 class="font-display font-bold text-lg mb-4">Pour le designer</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Visibilité à l'année</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Acheteurs pre-qualifiés par l'IA</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Tableau de bord analytique complet</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Relation directe avec les clients</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Retours réduits grâce à l'IA</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Barrière d'entrée minimale</li></ul></div>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 card-glow transition-all"><div class="text-2xl mb-3">&#x1F3AD;</div><h3 class="font-display font-bold text-lg mb-4">Pour M3</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Plateforme active 365 jours par an</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Revenus récurrents entre les événements</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Données sur les tendances</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Portée nationale et internationale</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Leader en innovation techno-mode</li><li class="flex gap-2"><span class="text-brand-400">&#x25B8;</span>Compagnon numerique pour événements</li></ul></div>
       </div>
     </div>
   </section>
 
   <!-- Pricing -->
-  <section id="prix" class="border-t border-[#1e1e35]">
+  <section id="prix" class="border-t border-white/5">
     <div class="max-w-5xl mx-auto px-6 py-20">
-      <div class="text-center mb-12">
+      <div class="text-center mb-14">
         <p class="text-brand-400 text-sm font-semibold tracking-wider uppercase mb-3">Abonnements</p>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Choisissez votre style</h2>
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4">Choisissez votre style</h2>
         <p class="text-slate-400">Commencez gratuitement. Passez au premium quand vous êtes prêt.</p>
       </div>
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 hover:border-brand-500/30 transition-colors">
-          <h3 class="font-bold text-lg mb-1">Découverte</h3>
-          <p class="text-slate-400 text-sm mb-4">Pour explorer</p>
-          <div class="text-4xl font-bold mb-1">0$<span class="text-lg font-normal text-slate-400">/mois</span></div>
-          <ul class="space-y-3 my-6 text-sm text-slate-400">
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Profil de mensurations</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>5 articles dans la garde-robe</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Parcourir les collections</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>3 conversations styliste/mois</li>
-            <li class="flex gap-2 opacity-40"><span>—</span>Mix & Match illimité</li>
-            <li class="flex gap-2 opacity-40"><span>—</span>Sauvegarder des looks</li>
-          </ul>
-          <button onclick="showAuth('register')" class="w-full py-3 border border-[#2a2a45] hover:border-brand-500 text-slate-300 hover:text-white rounded-lg font-bold text-sm transition-colors">Commencer</button>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 card-glow transition-all">
+          <h3 class="font-display font-bold text-lg mb-1">Découverte</h3><p class="text-slate-500 text-sm mb-4">Pour explorer</p>
+          <div class="text-4xl font-display font-bold mb-1">0$<span class="text-lg font-normal text-slate-500">/mois</span></div>
+          <ul class="space-y-3 my-6 text-sm text-slate-400"><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Profil de mensurations</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>5 articles dans la garde-robe</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Parcourir les collections</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>3 conversations styliste/mois</li><li class="flex gap-2 opacity-40"><span>-</span>Mix &amp; Match illimité</li><li class="flex gap-2 opacity-40"><span>-</span>Sauvegarder des looks</li></ul>
+          <button onclick="showAuth('register')" class="w-full py-3 border border-white/10 hover:border-brand-500/50 text-slate-300 hover:text-white rounded-full font-bold text-sm transition-all">Commencer</button>
         </div>
-        <div class="bg-[#131320] border-2 border-brand-500 rounded-xl p-6 relative">
-          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-500 text-[#0b0b14] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Populaire</div>
-          <h3 class="font-bold text-lg mb-1">Premium</h3>
-          <p class="text-slate-400 text-sm mb-4">L'expérience complète</p>
-          <div class="text-4xl font-bold mb-1">14,99$<span class="text-lg font-normal text-slate-400">/mois</span></div>
-          <ul class="space-y-3 my-6 text-sm text-slate-400">
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Profil complet</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Garde-robe illimitée</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Toutes les collections</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Styliste IA illimité</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Mix & Match avancé</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Sauvegarder et partager</li>
-          </ul>
-          <button onclick="showAuth('register')" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-lg font-bold text-sm transition-colors">S'abonner</button>
+        <div class="bg-[#0d0d14] border-2 border-brand-500 rounded-2xl p-6 relative shadow-lg shadow-brand-500/10">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-500 to-cyan-500 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">Populaire</div>
+          <h3 class="font-display font-bold text-lg mb-1">Premium</h3><p class="text-slate-500 text-sm mb-4">L'expérience complète</p>
+          <div class="text-4xl font-display font-bold mb-1">14,99$<span class="text-lg font-normal text-slate-500">/mois</span></div>
+          <ul class="space-y-3 my-6 text-sm text-slate-400"><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Profil complet</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Garde-robe illimitée</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Toutes les collections</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Styliste IA illimité</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Mix &amp; Match avancé</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Sauvegarder et partager</li></ul>
+          <button onclick="showAuth('register')" class="w-full py-3 btn-gradient text-white rounded-full font-bold text-sm transition-all">S'abonner</button>
         </div>
-        <div class="bg-[#131320] border border-[#1e1e35] rounded-xl p-6 hover:border-brand-500/30 transition-colors">
-          <h3 class="font-bold text-lg mb-1">Designer</h3>
-          <p class="text-slate-400 text-sm mb-4">Pour les créateurs</p>
-          <div class="text-4xl font-bold mb-1">99$<span class="text-lg font-normal text-slate-400">/saison</span></div>
-          <ul class="space-y-3 my-6 text-sm text-slate-400">
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Vitrine de collection</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Tableau de bord analytique</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Référencement IA automatique</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Accès direct aux acheteurs</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Gestion des commandes</li>
-            <li class="flex gap-2"><span class="text-brand-400">✓</span>Support prioritaire</li>
-          </ul>
-          <button onclick="showAuth('register')" class="w-full py-3 border border-[#2a2a45] hover:border-brand-500 text-slate-300 hover:text-white rounded-lg font-bold text-sm transition-colors">Devenir designer</button>
+        <div class="bg-[#0d0d14] border border-white/5 rounded-2xl p-6 card-glow transition-all">
+          <h3 class="font-display font-bold text-lg mb-1">Designer</h3><p class="text-slate-500 text-sm mb-4">Pour les créateurs</p>
+          <div class="text-4xl font-display font-bold mb-1">99$<span class="text-lg font-normal text-slate-500">/saison</span></div>
+          <ul class="space-y-3 my-6 text-sm text-slate-400"><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Vitrine de collection</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Tableau de bord analytique</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Référencement IA automatique</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Acces direct aux acheteurs</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Gestion des commandes</li><li class="flex gap-2"><span class="text-brand-400">&#x2713;</span>Support prioritaire</li></ul>
+          <button onclick="showAuth('register')" class="w-full py-3 border border-white/10 hover:border-brand-500/50 text-slate-300 hover:text-white rounded-full font-bold text-sm transition-all">Devenir designer</button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-[#1e1e35] py-10 px-6">
+  <footer class="border-t border-white/5 py-10 px-6">
     <div class="max-w-6xl mx-auto text-center">
-      <div class="text-xl font-bold mb-2">M3 <span class="text-brand-400">STYLE</span></div>
-      <p class="text-slate-400 text-sm mb-4">Les designers de M3. Votre garde-robe. Un styliste IA.</p>
-      <p class="text-slate-600 text-xs">© 2026 M3 Style — Un partenariat M3 Mode Masculine Montréal × Sylvain PMO Consulting</p>
+      <div class="text-xl font-display font-bold mb-2">M3<span class="text-brand-400">Style</span></div>
+      <p class="text-slate-500 text-sm mb-4">Les designers de M3. Votre garde-robe. Un styliste IA.</p>
+      <p class="text-slate-700 text-xs">&copy; 2026 M3 Style - Un partenariat M3 Mode Masculine Montréal × Panda Projet</p>
     </div>
   </footer>
 
   <!-- Auth Modal -->
   <div id="authModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" style="display: none;">
-    <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl p-8 max-w-md w-full fade-in relative">
-      <button onclick="hideAuth()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
+    <div class="bg-[#0d0d14] border border-white/10 rounded-2xl p-8 max-w-md w-full fade-in relative">
+      <button onclick="hideAuth()" class="absolute top-4 right-4 text-slate-500 hover:text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
 
-      <!-- Login -->
       <div id="loginForm">
-        <div class="text-center mb-6">
-          <h2 class="text-2xl font-bold text-white mb-2">Bienvenue</h2>
-          <p class="text-slate-400">Connectez-vous à votre compte</p>
-        </div>
-        <button onclick="window.location.href='/api/auth/google'" class="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-slate-100 text-gray-800 font-semibold rounded-lg transition-colors mb-4">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Continuer avec Google
-        </button>
-        <div class="flex items-center gap-4 my-5"><div class="flex-1 h-px bg-[#1e1e35]"></div><span class="text-slate-500 text-sm">ou</span><div class="flex-1 h-px bg-[#1e1e35]"></div></div>
+        <div class="text-center mb-6"><h2 class="text-2xl font-display font-bold text-white mb-2">Bienvenue</h2><p class="text-slate-400">Connectez-vous à votre compte</p></div>
+        <button onclick="window.location.href='/api/auth/google'" class="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-slate-100 text-gray-800 font-semibold rounded-full transition-colors mb-4"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Continuer avec Google</button>
+        <div class="flex items-center gap-4 my-5"><div class="flex-1 h-px bg-white/5"></div><span class="text-slate-500 text-sm">ou</span><div class="flex-1 h-px bg-white/5"></div></div>
         <form onsubmit="handleLogin(event)" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Courriel</label>
-            <input type="email" id="loginEmail" required class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="votre@courriel.com">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Mot de passe</label>
-            <input type="password" id="loginPassword" required class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="••••••••">
-            <button type="button" onclick="showAuth('forgot')" class="text-sm text-brand-400 hover:text-brand-300 mt-1 float-right">Mot de passe oublié?</button>
-          </div>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Courriel</label><input type="email" id="loginEmail" required class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="votre@courriel.com"></div>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Mot de passe</label><input type="password" id="loginPassword" required class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="........"><button type="button" onclick="showAuth('forgot')" class="text-sm text-brand-400 hover:text-brand-300 mt-1 float-right">Mot de passe oublié?</button></div>
           <div id="loginError" class="text-red-400 text-sm hidden"></div>
-          <button type="submit" id="loginBtn" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-lg transition-colors">Se connecter</button>
+          <button type="submit" id="loginBtn" class="w-full py-3 btn-gradient text-white font-bold rounded-full transition-all">Se connecter</button>
         </form>
         <p class="text-center text-slate-400 text-sm mt-6">Pas encore de compte? <button onclick="showAuth('register')" class="text-brand-400 hover:text-brand-300 font-medium">S'inscrire</button></p>
       </div>
 
-      <!-- Register -->
       <div id="registerForm" style="display: none;">
-        <div class="text-center mb-6">
-          <h2 class="text-2xl font-bold text-white mb-2">Créer un compte</h2>
-          <p class="text-slate-400">Rejoignez M3 Style gratuitement</p>
-        </div>
-        <button onclick="window.location.href='/api/auth/google'" class="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-slate-100 text-gray-800 font-semibold rounded-lg transition-colors mb-4">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          S'inscrire avec Google
-        </button>
-        <div class="flex items-center gap-4 my-5"><div class="flex-1 h-px bg-[#1e1e35]"></div><span class="text-slate-500 text-sm">ou</span><div class="flex-1 h-px bg-[#1e1e35]"></div></div>
+        <div class="text-center mb-6"><h2 class="text-2xl font-display font-bold text-white mb-2">Créer un compte</h2><p class="text-slate-400">Rejoignez M3 Style gratuitement</p></div>
+        <button onclick="window.location.href='/api/auth/google'" class="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-slate-100 text-gray-800 font-semibold rounded-full transition-colors mb-4"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>S'inscrire avec Google</button>
+        <div class="flex items-center gap-4 my-5"><div class="flex-1 h-px bg-white/5"></div><span class="text-slate-500 text-sm">ou</span><div class="flex-1 h-px bg-white/5"></div></div>
         <form onsubmit="handleRegister(event)" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Nom complet</label>
-            <input type="text" id="registerName" required class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="Jean Dupont">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Courriel</label>
-            <input type="email" id="registerEmail" required class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="votre@courriel.com">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Mot de passe (8+ caractères)</label>
-            <input type="password" id="registerPassword" required minlength="8" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="••••••••">
-          </div>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Nom complet</label><input type="text" id="registerName" required class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="Jean Dupont"></div>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Courriel</label><input type="email" id="registerEmail" required class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="votre@courriel.com"></div>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Mot de passe (8+ caractères)</label><input type="password" id="registerPassword" required minlength="8" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="........"></div>
           <div id="registerError" class="text-red-400 text-sm hidden"></div>
-          <button type="submit" id="registerBtn" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-lg transition-colors">Créer mon compte</button>
+          <button type="submit" id="registerBtn" class="w-full py-3 btn-gradient text-white font-bold rounded-full transition-all">Créer mon compte</button>
         </form>
         <p class="text-center text-slate-400 text-sm mt-6">Déjà un compte? <button onclick="showAuth('login')" class="text-brand-400 hover:text-brand-300 font-medium">Se connecter</button></p>
       </div>
 
-      <!-- Forgot Password -->
       <div id="forgotForm" style="display: none;">
-        <div class="text-center mb-6">
-          <h2 class="text-2xl font-bold text-white mb-2">Réinitialiser</h2>
-          <p class="text-slate-400">Entrez votre courriel pour recevoir un lien</p>
-        </div>
+        <div class="text-center mb-6"><h2 class="text-2xl font-display font-bold text-white mb-2">Réinitialiser</h2><p class="text-slate-400">Entrez votre courriel pour recevoir un lien</p></div>
         <form onsubmit="handleForgotPassword(event)" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Courriel</label>
-            <input type="email" id="forgotEmail" required class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="votre@courriel.com">
-          </div>
-          <div id="forgotError" class="text-red-400 text-sm hidden"></div>
-          <div id="forgotSuccess" class="text-green-400 text-sm hidden"></div>
-          <button type="submit" id="forgotBtn" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-lg transition-colors">Envoyer le lien</button>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Courriel</label><input type="email" id="forgotEmail" required class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="votre@courriel.com"></div>
+          <div id="forgotError" class="text-red-400 text-sm hidden"></div><div id="forgotSuccess" class="text-green-400 text-sm hidden"></div>
+          <button type="submit" id="forgotBtn" class="w-full py-3 btn-gradient text-white font-bold rounded-full transition-all">Envoyer le lien</button>
         </form>
-        <p class="text-center text-slate-400 text-sm mt-6"><button onclick="showAuth('login')" class="text-brand-400 hover:text-brand-300 font-medium">← Retour à la connexion</button></p>
+        <p class="text-center text-slate-400 text-sm mt-6"><button onclick="showAuth('login')" class="text-brand-400 hover:text-brand-300 font-medium">&larr; Retour a la connexion</button></p>
       </div>
 
-      <!-- Reset Password -->
       <div id="resetForm" style="display: none;">
-        <div class="text-center mb-6">
-          <h2 class="text-2xl font-bold text-white mb-2">Nouveau mot de passe</h2>
-          <p class="text-slate-400">Choisissez un nouveau mot de passe</p>
-        </div>
+        <div class="text-center mb-6"><h2 class="text-2xl font-display font-bold text-white mb-2">Nouveau mot de passe</h2><p class="text-slate-400">Choisissez un nouveau mot de passe</p></div>
         <form onsubmit="handleResetPassword(event)" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Nouveau mot de passe</label>
-            <input type="password" id="resetPassword" required minlength="8" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="••••••••">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-300 mb-2">Confirmer</label>
-            <input type="password" id="resetPasswordConfirm" required minlength="8" class="w-full px-4 py-3 bg-[#1a1a2e] border border-[#2a2a45] rounded-lg text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="••••••••">
-          </div>
-          <div id="resetError" class="text-red-400 text-sm hidden"></div>
-          <div id="resetSuccess" class="text-green-400 text-sm hidden"></div>
-          <button type="submit" id="resetBtn" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-lg transition-colors">Mettre à jour</button>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Nouveau mot de passe</label><input type="password" id="resetPassword" required minlength="8" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="........"></div>
+          <div><label class="block text-sm font-medium text-slate-300 mb-2">Confirmer</label><input type="password" id="resetPasswordConfirm" required minlength="8" class="w-full px-4 py-3 bg-[#05050a] border border-white/10 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="........"></div>
+          <div id="resetError" class="text-red-400 text-sm hidden"></div><div id="resetSuccess" class="text-green-400 text-sm hidden"></div>
+          <button type="submit" id="resetBtn" class="w-full py-3 btn-gradient text-white font-bold rounded-full transition-all">Mettre à jour</button>
         </form>
       </div>
     </div>
@@ -357,112 +231,76 @@
 
   <script>
     let currentUser = null;
-
     async function checkAuth() {
-      const token = localStorage.getItem('auth_token');
-      if (!token) return;
-      try {
-        const res = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
-        if (res.ok) {
-          const data = await res.json();
-          currentUser = data.user;
-          updateHeaderForUser();
-        } else { localStorage.removeItem('auth_token'); }
+      const token = localStorage.getItem('auth_token'); if (!token) return;
+      try { const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
+        if (res.ok) { const data = await res.json(); currentUser = data.user; updateHeaderForUser(); }
+        else { localStorage.removeItem('auth_token'); }
       } catch (e) { console.error('Auth check failed:', e); }
     }
-
     function updateHeaderForUser() {
-      document.getElementById('headerNav').innerHTML = `
-        <span class="text-slate-400 text-sm">Bonjour, <span class="text-white font-medium">${currentUser.name || currentUser.email}</span></span>
-        ${currentUser.isAdmin ? '<a href="/admin.html" class="text-brand-400 hover:text-brand-300 text-sm font-medium">Admin</a>' : ''}
-        <a href="/dashboard.html" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors">Tableau de bord</a>
-        <button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>
-      `;
+      document.getElementById('headerNav').innerHTML = '<span class="text-slate-400 text-sm">Bonjour, <span class="text-white font-medium">' + (currentUser.name || currentUser.email) + '</span></span>' +
+        (currentUser.isAdmin ? '<a href="/admin.html" class="text-brand-400 hover:text-brand-300 text-sm font-medium">Admin</a>' : '') +
+        '<a href="/dashboard.html" class="btn-gradient text-white px-5 py-2 rounded-full text-sm font-bold transition-all">Tableau de bord</a>' +
+        '<button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>';
     }
-
     function showAuth(type) {
       document.getElementById('authModal').style.display = 'flex';
       document.getElementById('loginForm').style.display = type === 'login' ? 'block' : 'none';
       document.getElementById('registerForm').style.display = type === 'register' ? 'block' : 'none';
       document.getElementById('forgotForm').style.display = type === 'forgot' ? 'block' : 'none';
       document.getElementById('resetForm').style.display = type === 'reset' ? 'block' : 'none';
-      document.querySelectorAll('#authModal .text-red-400, #authModal .text-green-400').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('#authModal .text-red-400, #authModal .text-green-400').forEach(function(el) { el.classList.add('hidden'); });
     }
     function hideAuth() { document.getElementById('authModal').style.display = 'none'; }
-
     async function handleLogin(e) {
-      e.preventDefault();
-      const btn = document.getElementById('loginBtn'); const error = document.getElementById('loginError');
+      e.preventDefault(); var btn = document.getElementById('loginBtn'); var error = document.getElementById('loginError');
       btn.disabled = true; btn.textContent = 'Connexion...'; error.classList.add('hidden');
-      try {
-        const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value }) });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Erreur de connexion');
+      try { var res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: document.getElementById('loginEmail').value, password: document.getElementById('loginPassword').value }) });
+        var data = await res.json(); if (!res.ok) throw new Error(data.error || 'Erreur de connexion');
         localStorage.setItem('auth_token', data.token); window.location.href = '/dashboard.html';
       } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); }
       finally { btn.disabled = false; btn.textContent = 'Se connecter'; }
     }
-
     async function handleRegister(e) {
-      e.preventDefault();
-      const btn = document.getElementById('registerBtn'); const error = document.getElementById('registerError');
+      e.preventDefault(); var btn = document.getElementById('registerBtn'); var error = document.getElementById('registerError');
       btn.disabled = true; btn.textContent = 'Création...'; error.classList.add('hidden');
-      try {
-        const res = await fetch('/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: document.getElementById('registerName').value, email: document.getElementById('registerEmail').value, password: document.getElementById('registerPassword').value }) });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Erreur d'inscription");
+      try { var res = await fetch('/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: document.getElementById('registerName').value, email: document.getElementById('registerEmail').value, password: document.getElementById('registerPassword').value }) });
+        var data = await res.json(); if (!res.ok) throw new Error(data.error || "Erreur d'inscription");
         localStorage.setItem('auth_token', data.token); window.location.href = '/dashboard.html';
       } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); }
       finally { btn.disabled = false; btn.textContent = 'Créer mon compte'; }
     }
-
     async function handleForgotPassword(e) {
-      e.preventDefault();
-      const btn = document.getElementById('forgotBtn'); const error = document.getElementById('forgotError'); const success = document.getElementById('forgotSuccess');
+      e.preventDefault(); var btn = document.getElementById('forgotBtn'); var error = document.getElementById('forgotError'); var success = document.getElementById('forgotSuccess');
       btn.disabled = true; btn.textContent = 'Envoi...'; error.classList.add('hidden'); success.classList.add('hidden');
-      try {
-        const res = await fetch('/api/auth/forgot-password', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: document.getElementById('forgotEmail').value }) });
-        const data = await res.json();
-        if (data.success) { success.textContent = data.message || 'Courriel envoyé!'; success.classList.remove('hidden'); }
-        else throw new Error(data.error || 'Erreur');
-      } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); }
-      finally { btn.disabled = false; btn.textContent = 'Envoyer le lien'; }
+      try { var res = await fetch('/api/auth/forgot-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: document.getElementById('forgotEmail').value }) });
+        var data = await res.json(); if (data.success) { success.textContent = data.message || 'Courriel envoyé!'; success.classList.remove('hidden'); } else throw new Error(data.error || 'Erreur');
+      } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Envoyer le lien'; }
     }
-
     async function handleResetPassword(e) {
-      e.preventDefault();
-      const btn = document.getElementById('resetBtn'); const error = document.getElementById('resetError'); const success = document.getElementById('resetSuccess');
-      const pw = document.getElementById('resetPassword').value;
+      e.preventDefault(); var btn = document.getElementById('resetBtn'); var error = document.getElementById('resetError'); var success = document.getElementById('resetSuccess');
+      var pw = document.getElementById('resetPassword').value;
       if (pw !== document.getElementById('resetPasswordConfirm').value) { error.textContent = 'Les mots de passe ne correspondent pas'; error.classList.remove('hidden'); return; }
       btn.disabled = true; btn.textContent = 'Mise à jour...'; error.classList.add('hidden'); success.classList.add('hidden');
-      try {
-        const res = await fetch('/api/auth/reset-password', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token: new URLSearchParams(window.location.search).get('reset_token'), password: pw }) });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Erreur');
+      try { var res = await fetch('/api/auth/reset-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: new URLSearchParams(window.location.search).get('reset_token'), password: pw }) });
+        var data = await res.json(); if (!res.ok) throw new Error(data.error || 'Erreur');
         success.textContent = 'Mot de passe mis à jour! Redirection...'; success.classList.remove('hidden'); btn.style.display = 'none';
-        setTimeout(() => { window.history.replaceState({}, '', '/'); showAuth('login'); }, 2000);
-      } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); }
-      finally { btn.disabled = false; btn.textContent = 'Mettre à jour'; }
+        setTimeout(function() { window.history.replaceState({}, '', '/'); showAuth('login'); }, 2000);
+      } catch (err) { error.textContent = err.message; error.classList.remove('hidden'); } finally { btn.disabled = false; btn.textContent = 'Mettre à jour'; }
     }
-
     function handleURLParams() {
-      const params = new URLSearchParams(window.location.search);
+      var params = new URLSearchParams(window.location.search);
       if (params.get('token')) { localStorage.setItem('auth_token', params.get('token')); window.history.replaceState({}, '', '/'); checkAuth(); return; }
       if (params.get('reset_token')) { showAuth('reset'); return; }
       if (params.get('error')) { showAuth('login'); document.getElementById('loginError').textContent = 'Erreur de connexion.'; document.getElementById('loginError').classList.remove('hidden'); window.history.replaceState({}, '', '/'); }
     }
-
     function logout() { localStorage.removeItem('auth_token'); currentUser = null; window.location.reload(); }
     function handleHashAuth() { if (window.location.hash === '#login') showAuth('login'); if (window.location.hash === '#register') showAuth('register'); }
-
     handleURLParams(); checkAuth(); handleHashAuth();
     window.addEventListener('hashchange', handleHashAuth);
     document.getElementById('authModal').addEventListener('click', function(e) { if (e.target === this) hideAuth(); });
-    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) { const t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } }));
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) { a.addEventListener('click', function(e) { var t = document.querySelector(this.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } }); });
   </script>
 </body>
 </html>

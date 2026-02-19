@@ -4,19 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tableau de bord | M3 Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwindcss.config = {
       theme: {
         extend: {
           colors: {
-            brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' }
+            brand: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
           }
         }
       }
     }
   </script>
   <style>
+    body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
     @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -26,16 +29,16 @@
     .slide-in:nth-child(2) { animation-delay: 0.1s; }
     .slide-in:nth-child(3) { animation-delay: 0.15s; }
     .slide-in:nth-child(4) { animation-delay: 0.2s; }
-    .skeleton { background: linear-gradient(90deg, #1a1a2e 25%, #2a2a45 50%, #1a1a2e 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; }
+    .skeleton { background: linear-gradient(90deg, #0d0d14 25%, rgba(255,255,255,0.1) 50%, #0d0d14 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; }
     .stat-card { transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
     .stat-card:hover { transform: translateY(-4px); }
     .stat-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); pointer-events: none; }
   </style>
 </head>
-<body class="bg-[#0b0b14] min-h-screen">
+<body class="bg-[#05050a] min-h-screen">
 
   <!-- Header -->
-  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+  <header class="border-b border-white/5 bg-[#05050a]/95 sticky top-0 z-50 backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3">
         <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center">
@@ -92,12 +95,12 @@
 
     <!-- Stat Cards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <div class="stat-card bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl p-6 text-white shadow-lg shadow-amber-500/20">
+      <div class="stat-card bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-6 text-white shadow-lg shadow-indigo-500/20">
         <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Garde-robe</div>
         <div id="statWardrobe" class="text-4xl font-bold animate-in">0</div>
         <div class="mt-3 text-xs opacity-70">articles enregistrés</div>
       </div>
-      <div class="stat-card bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg shadow-violet-500/20">
+      <div class="stat-card bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl p-6 text-white shadow-lg shadow-violet-500/20">
         <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Looks sauvés</div>
         <div id="statLooks" class="text-4xl font-bold animate-in">0</div>
         <div class="mt-3 text-xs opacity-70">tenues créées</div>
@@ -107,7 +110,7 @@
         <div id="statConversations" class="text-4xl font-bold animate-in">0</div>
         <div class="mt-3 text-xs opacity-70">avec le styliste IA</div>
       </div>
-      <div class="stat-card bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl p-6 text-white shadow-lg shadow-rose-500/20">
+      <div class="stat-card bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl p-6 text-white shadow-lg shadow-cyan-500/20">
         <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Produits sauvés</div>
         <div id="statSaved" class="text-4xl font-bold animate-in">0</div>
         <div class="mt-3 text-xs opacity-70">dans votre liste</div>
@@ -127,8 +130,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
       <!-- Wardrobe Preview -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl overflow-hidden">
-        <div class="p-6 border-b border-[#1e1e35] flex items-center justify-between">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-white/5 flex items-center justify-between">
           <h2 class="text-lg font-bold text-white">Ma garde-robe</h2>
           <a href="/wardrobe.html" class="text-brand-400 hover:text-brand-300 text-sm font-medium">Voir tout →</a>
         </div>
@@ -145,40 +148,40 @@
       </div>
 
       <!-- Quick Actions -->
-      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl overflow-hidden">
-        <div class="p-6 border-b border-[#1e1e35]">
+      <div class="bg-[#0d0d14] border border-white/5 rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-white/5">
           <h2 class="text-lg font-bold text-white">Actions rapides</h2>
         </div>
         <div class="p-4 space-y-2">
-          <a href="/wardrobe.html?add=true" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
-            <div class="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-amber-500/20 transition-colors">📸</div>
+          <a href="/wardrobe.html?add=true" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#05050a] transition-colors group">
+            <div class="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-indigo-500/20 transition-colors">📸</div>
             <div>
               <div class="text-white font-medium text-sm">Ajouter un vêtement</div>
               <div class="text-slate-500 text-xs">Photographier et cataloguer</div>
             </div>
           </a>
-          <a href="/stylist.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+          <a href="/stylist.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#05050a] transition-colors group">
             <div class="w-10 h-10 bg-violet-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-violet-500/20 transition-colors">💬</div>
             <div>
               <div class="text-white font-medium text-sm">Nouveau look</div>
               <div class="text-slate-500 text-xs">Consultation avec le styliste IA</div>
             </div>
           </a>
-          <a href="/marketplace.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+          <a href="/marketplace.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#05050a] transition-colors group">
             <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-emerald-500/20 transition-colors">🔍</div>
             <div>
               <div class="text-white font-medium text-sm">Explorer les designers</div>
               <div class="text-slate-500 text-xs">Parcourir les collections M3</div>
             </div>
           </a>
-          <a href="/profile.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
-            <div class="w-10 h-10 bg-rose-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-rose-500/20 transition-colors">📏</div>
+          <a href="/profile.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#05050a] transition-colors group">
+            <div class="w-10 h-10 bg-cyan-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-cyan-500/20 transition-colors">📏</div>
             <div>
               <div class="text-white font-medium text-sm">Mes mensurations</div>
               <div class="text-slate-500 text-xs">Mettre à jour mon profil</div>
             </div>
           </a>
-          <a href="/looks.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+          <a href="/looks.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#05050a] transition-colors group">
             <div class="w-10 h-10 bg-brand-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-brand-500/20 transition-colors">💎</div>
             <div>
               <div class="text-white font-medium text-sm">Mes looks sauvegardés</div>
