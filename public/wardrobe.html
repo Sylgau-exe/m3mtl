@@ -193,7 +193,7 @@
         var img = new Image();
         img.onload = function() {
           var canvas = document.createElement('canvas');
-          var maxSize = 800;
+          var maxSize = 512;
           var w = img.width, h = img.height;
           if (w > maxSize || h > maxSize) {
             if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
@@ -201,7 +201,7 @@
           }
           canvas.width = w; canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          currentPhotoBase64 = canvas.toDataURL('image/jpeg', 0.8);
+          currentPhotoBase64 = canvas.toDataURL('image/jpeg', 0.5);
           document.getElementById('dropContent').style.display = 'none';
           document.getElementById('photoPreview').style.display = 'block';
           document.getElementById('previewImg').src = currentPhotoBase64;
@@ -223,14 +223,26 @@
     async function analyzePhoto(base64) {
       var status = document.getElementById('analyzeStatus');
       status.classList.remove('hidden');
+      status.innerHTML = '<div class="inline-flex items-center gap-2 text-brand-400"><svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg><span>Yves analyse le vetement...</span></div>';
 
       try {
+        console.log('Sending image, size:', Math.round(base64.length / 1024) + 'KB');
         var res = await fetch('/api/wardrobe/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
           body: JSON.stringify({ image_base64: base64 })
         });
+        console.log('Response status:', res.status);
+        
+        if (!res.ok) {
+          var errText = await res.text();
+          console.error('API error:', res.status, errText);
+          status.innerHTML = '<span class="text-amber-400">Erreur serveur (' + res.status + ') — remplissez manuellement</span>';
+          return;
+        }
+
         var data = await res.json();
+        console.log('Analysis result:', data);
         
         if (data.analysis) {
           var a = data.analysis;
@@ -238,19 +250,20 @@
           if (a.category) document.getElementById('itemCategory').value = a.category;
           if (a.subcategory) document.getElementById('itemSubcategory').value = a.subcategory;
           if (a.color_primary) document.getElementById('itemColor').value = a.color_primary;
-          if (a.brand && a.brand !== 'null') document.getElementById('itemBrand').value = a.brand;
+          if (a.brand && a.brand !== 'null' && a.brand !== null) document.getElementById('itemBrand').value = a.brand;
           if (a.material) document.getElementById('itemMaterial').value = a.material;
           if (a.size) document.getElementById('itemSize').value = a.size;
           if (a.fit) document.getElementById('itemFit').value = a.fit;
-          if (a.pattern && a.pattern !== 'null') document.getElementById('itemPattern').value = a.pattern;
+          if (a.pattern && a.pattern !== 'null' && a.pattern !== null) document.getElementById('itemPattern').value = a.pattern;
           
-          status.innerHTML = '<span class="text-emerald-400 font-medium">&#x2713; Analysé par Yves — vérifiez et ajustez si besoin</span>';
+          status.innerHTML = '<span class="text-emerald-400 font-medium">&#x2713; Analyse par Yves — verifiez et ajustez si besoin</span>';
         } else {
-          status.innerHTML = '<span class="text-amber-400">Analyse incomplète — remplissez manuellement</span>';
+          console.error('No analysis in response:', data);
+          status.innerHTML = '<span class="text-amber-400">Analyse incomplete (' + (data.error || 'reponse vide') + ')</span>';
         }
       } catch(err) {
         console.error('Analyze error:', err);
-        status.innerHTML = '<span class="text-amber-400">Erreur d\'analyse — remplissez manuellement</span>';
+        status.innerHTML = '<span class="text-amber-400">Erreur de connexion — remplissez manuellement</span>';
       }
     }
 
