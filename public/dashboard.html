@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord | M3 Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 300: '#D4B96A', 400: '#C4A35A', 500: '#B8954E', 600: '#A08040', 700: '#887030' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes countUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .animate-in { animation: countUp 0.5s ease forwards; }
+    .slide-in { animation: slideIn 0.3s ease forwards; opacity: 0; }
+    .slide-in:nth-child(1) { animation-delay: 0.05s; }
+    .slide-in:nth-child(2) { animation-delay: 0.1s; }
+    .slide-in:nth-child(3) { animation-delay: 0.15s; }
+    .slide-in:nth-child(4) { animation-delay: 0.2s; }
+    .skeleton { background: linear-gradient(90deg, #1a1a2e 25%, #2a2a45 50%, #1a1a2e 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; }
+    .stat-card { transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
+    .stat-card:hover { transform: translateY(-4px); }
+    .stat-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); pointer-events: none; }
+  </style>
+</head>
+<body class="bg-[#0b0b14] min-h-screen">
+
+  <!-- Header -->
+  <header class="border-b border-[#1e1e35] bg-[#0b0b14]/95 sticky top-0 z-50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center">
+          <span class="text-xl">👔</span>
+        </div>
+        <span class="text-xl font-bold text-white">M3 <span class="text-brand-400">STYLE</span></span>
+      </a>
+      <div id="headerNav" class="flex items-center gap-4">
+        <a href="/wardrobe.html" class="text-slate-400 hover:text-white text-sm">Garde-robe</a>
+        <a href="/stylist.html" class="text-slate-400 hover:text-white text-sm">Styliste IA</a>
+        <a href="/marketplace.html" class="text-slate-400 hover:text-white text-sm">Designers</a>
+        <a href="/profile.html" class="text-slate-400 hover:text-white text-sm">Mon profil</a>
+        <span id="adminLink"></span>
+        <button onclick="logout()" class="text-slate-400 hover:text-white text-sm">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div id="loading" class="max-w-7xl mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="skeleton h-32"></div><div class="skeleton h-32"></div>
+      <div class="skeleton h-32"></div><div class="skeleton h-32"></div>
+    </div>
+    <div class="skeleton h-48 mb-6"></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="skeleton h-64"></div><div class="skeleton h-64"></div>
+    </div>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div id="dashboard" class="hidden max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Profile Banner -->
+    <div id="profileBanner" class="hidden bg-gradient-to-r from-brand-500/20 to-brand-500/5 border border-brand-500/30 rounded-2xl p-5 mb-6 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📐</span>
+        <div>
+          <p class="text-white font-medium">Complétez votre profil de mensurations</p>
+          <p class="text-slate-400 text-sm">Débloquez le styliste IA avec des recommandations précises</p>
+        </div>
+      </div>
+      <a href="/profile.html" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors whitespace-nowrap">Compléter →</a>
+    </div>
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-white">Bonjour, <span class="text-brand-400" id="greeting">...</span></h1>
+        <p class="text-slate-400 mt-1">Votre tableau de bord M3 Style</p>
+      </div>
+      <span id="planBadge" class="text-xs px-2 py-1 bg-brand-500/20 text-brand-400 rounded-full font-semibold uppercase tracking-wider">Free</span>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="stat-card bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl p-6 text-white shadow-lg shadow-amber-500/20">
+        <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Garde-robe</div>
+        <div id="statWardrobe" class="text-4xl font-bold animate-in">0</div>
+        <div class="mt-3 text-xs opacity-70">articles enregistrés</div>
+      </div>
+      <div class="stat-card bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl p-6 text-white shadow-lg shadow-violet-500/20">
+        <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Looks sauvés</div>
+        <div id="statLooks" class="text-4xl font-bold animate-in">0</div>
+        <div class="mt-3 text-xs opacity-70">tenues créées</div>
+      </div>
+      <div class="stat-card bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl p-6 text-white shadow-lg shadow-emerald-500/20">
+        <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Conversations</div>
+        <div id="statConversations" class="text-4xl font-bold animate-in">0</div>
+        <div class="mt-3 text-xs opacity-70">avec le styliste IA</div>
+      </div>
+      <div class="stat-card bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl p-6 text-white shadow-lg shadow-rose-500/20">
+        <div class="text-sm opacity-80 uppercase tracking-wide font-medium mb-1">Produits sauvés</div>
+        <div id="statSaved" class="text-4xl font-bold animate-in">0</div>
+        <div class="mt-3 text-xs opacity-70">dans votre liste</div>
+      </div>
+    </div>
+
+    <!-- Stylist CTA -->
+    <div class="bg-gradient-to-r from-brand-500/10 to-transparent border border-brand-500/20 rounded-2xl p-8 mb-8 flex flex-col md:flex-row items-center gap-6">
+      <div class="text-5xl">✨</div>
+      <div class="flex-1 text-center md:text-left">
+        <h2 class="text-xl font-bold text-white mb-1">Votre Styliste IA vous attend</h2>
+        <p class="text-slate-400 text-sm">Décrivez l'occasion, fixez votre budget. Le styliste combinera votre garde-robe avec les créations des designers M3 pour le look parfait.</p>
+      </div>
+      <a href="/stylist.html" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-3 rounded-lg font-bold text-sm transition-colors whitespace-nowrap">Lancer une session →</a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Wardrobe Preview -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-[#1e1e35] flex items-center justify-between">
+          <h2 class="text-lg font-bold text-white">Ma garde-robe</h2>
+          <a href="/wardrobe.html" class="text-brand-400 hover:text-brand-300 text-sm font-medium">Voir tout →</a>
+        </div>
+        <div class="p-6">
+          <div id="wardrobePreview" class="grid grid-cols-4 gap-3">
+            <!-- Items loaded dynamically -->
+          </div>
+          <div id="wardrobeEmpty" class="text-center py-8">
+            <div class="text-4xl mb-3 opacity-30">👔</div>
+            <p class="text-slate-400 text-sm mb-4">Votre garde-robe est vide</p>
+            <a href="/wardrobe.html?add=true" class="text-brand-400 hover:text-brand-300 text-sm font-medium">Ajouter un vêtement →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="bg-[#131320] border border-[#1e1e35] rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-[#1e1e35]">
+          <h2 class="text-lg font-bold text-white">Actions rapides</h2>
+        </div>
+        <div class="p-4 space-y-2">
+          <a href="/wardrobe.html?add=true" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+            <div class="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-amber-500/20 transition-colors">📸</div>
+            <div>
+              <div class="text-white font-medium text-sm">Ajouter un vêtement</div>
+              <div class="text-slate-500 text-xs">Photographier et cataloguer</div>
+            </div>
+          </a>
+          <a href="/stylist.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+            <div class="w-10 h-10 bg-violet-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-violet-500/20 transition-colors">💬</div>
+            <div>
+              <div class="text-white font-medium text-sm">Nouveau look</div>
+              <div class="text-slate-500 text-xs">Consultation avec le styliste IA</div>
+            </div>
+          </a>
+          <a href="/marketplace.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+            <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-emerald-500/20 transition-colors">🔍</div>
+            <div>
+              <div class="text-white font-medium text-sm">Explorer les designers</div>
+              <div class="text-slate-500 text-xs">Parcourir les collections M3</div>
+            </div>
+          </a>
+          <a href="/profile.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+            <div class="w-10 h-10 bg-rose-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-rose-500/20 transition-colors">📏</div>
+            <div>
+              <div class="text-white font-medium text-sm">Mes mensurations</div>
+              <div class="text-slate-500 text-xs">Mettre à jour mon profil</div>
+            </div>
+          </a>
+          <a href="/looks.html" class="flex items-center gap-4 p-4 rounded-xl hover:bg-[#1a1a2e] transition-colors group">
+            <div class="w-10 h-10 bg-brand-500/10 rounded-lg flex items-center justify-center text-lg group-hover:bg-brand-500/20 transition-colors">💎</div>
+            <div>
+              <div class="text-white font-medium text-sm">Mes looks sauvegardés</div>
+              <div class="text-slate-500 text-xs">Retrouver vos tenues favorites</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('auth_token');
+    if (!token) window.location.href = '/';
+
+    async function loadDashboard() {
+      try {
+        // Auth check
+        const res = await fetch('/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
+        if (!res.ok) throw new Error('Not authenticated');
+        const data = await res.json();
+        const user = data.user;
+
+        // Show dashboard, hide loading
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+
+        // Populate user info
+        document.getElementById('greeting').textContent = (user.name || 'Styliste').split(' ')[0];
+        document.getElementById('planBadge').textContent = user.plan || 'Free';
+        if (user.isAdmin) {
+          document.getElementById('adminLink').innerHTML = '<a href="/admin.html" class="text-xs px-2 py-1 bg-brand-500/20 text-brand-400 rounded-full font-semibold">ADMIN</a>';
+        }
+
+        // Load stats
+        try {
+          const statsRes = await fetch('/api/dashboard/stats', { headers: { 'Authorization': 'Bearer ' + token } });
+          if (statsRes.ok) {
+            const stats = await statsRes.json();
+            document.getElementById('statWardrobe').textContent = stats.wardrobe_count || 0;
+            document.getElementById('statLooks').textContent = stats.looks_count || 0;
+            document.getElementById('statConversations').textContent = stats.conversation_count || 0;
+            document.getElementById('statSaved').textContent = stats.saved_count || 0;
+
+            if (!stats.has_profile) {
+              document.getElementById('profileBanner').classList.remove('hidden');
+            }
+
+            if (stats.wardrobe_count > 0) {
+              document.getElementById('wardrobeEmpty').classList.add('hidden');
+              // Could load wardrobe preview items here
+            }
+          }
+        } catch(e) { console.log('Stats not available yet'); }
+
+      } catch(error) {
+        localStorage.removeItem('auth_token');
+        window.location.href = '/';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('auth_token');
+      window.location.href = '/';
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

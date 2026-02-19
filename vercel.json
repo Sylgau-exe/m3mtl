@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/wardrobe", "destination": "/wardrobe.html" },
+    { "source": "/stylist", "destination": "/stylist.html" },
+    { "source": "/marketplace", "destination": "/marketplace.html" },
+    { "source": "/looks", "destination": "/looks.html" },
+    { "source": "/profile", "destination": "/profile.html" }
+  ]
+}
