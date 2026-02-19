@@ -1,5 +1,6 @@
 // api/auth/me.js (adapted to use db.js like BizSimHub)
-import { sql } from '@vercel/postgres';
+import { getSQL } from '../../lib/db.js';
+const sql = getSQL();
 import { requireAuth, cors } from '../../lib/auth.js';
 import { UserDB } from '../../lib/db.js';
 

@@ -1,5 +1,6 @@
 // api/admin/users.js - List all users (adapted from BizSimHub)
-import { sql } from '@vercel/postgres';
+import { getSQL } from '../../lib/db.js';
+const sql = getSQL();
 import { getUserFromRequest, cors } from '../../lib/auth.js';
 
 export default async function handler(req, res) {
